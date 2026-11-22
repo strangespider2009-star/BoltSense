@@ -5,7 +5,6 @@ const temp=['Bearing temperature (°C)','Vibration RMS (mm/s)']
 const drive=['Motor current (A)','Winding temperature (°C)']
 const motion=['Position feedback (mm)','Axis motor current (A)']
 const oil=['Oil temperature (°C)','Oil condition / contamination']
-const hydraulic=['Fluid pressure (bar)','Fluid temperature (°C)']
 export const monitorPlan:Record<string,Entry[]>={
  'cnc-001':[
   ['spindle-bearing-01','Spindle Bearing','Spindle housing',['Vibration accelerometer','Temperature probe'],temp],
