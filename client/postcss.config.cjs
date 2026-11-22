@@ -1,0 +1,1 @@
+// BoltSense config scaffold
