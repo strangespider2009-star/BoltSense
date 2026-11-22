@@ -1,1 +1,121 @@
-// BoltSense database schema scaffold
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Machine {
+  id String @id
+  name String
+  type String
+  category String
+  description String?
+  status String @default("unknown")
+  components Component[]
+  sensors Sensor[]
+  alerts Alert[]
+  maintenance MaintenanceRecord[]
+  @@index([category])
+}
+model Component {
+  id String @id
+  machineId String
+  machine Machine @relation(fields:[machineId],references:[id],onDelete:Cascade)
+  name String
+  type String
+  location String?
+  status String @default("unknown")
+  sensors Sensor[]
+  readings SensorReading[]
+  alerts Alert[]
+  riskAssessments RiskAssessment[]
+  maintenance MaintenanceRecord[]
+  @@index([machineId])
+}
+model Sensor {
+  id String @id
+  machineId String
+  componentId String
+  machine Machine @relation(fields:[machineId],references:[id])
+  component Component @relation(fields:[componentId],references:[id])
+  hardwareId String
+  kind String
+  unit String
+  status String @default("offline")
+  sampleRateHz Float?
+  calibratedAt DateTime?
+  lastSeen DateTime?
+  thresholds Json?
+  readings SensorReading[]
+  @@index([machineId,componentId])
+}
+model SensorReading {
+  id String @id @default(cuid())
+  sensorId String
+  sensor Sensor @relation(fields:[sensorId],references:[id])
+  machineId String
+  componentId String
+  component Component @relation(fields:[componentId],references:[id])
+  timestamp DateTime
+  receivedAt DateTime @default(now())
+  metrics Json
+  dataQuality String @default("valid")
+  @@index([componentId,timestamp])
+  @@index([sensorId,timestamp])
+}
+model Alert {
+  id String @id @default(cuid())
+  machineId String
+  machine Machine @relation(fields:[machineId],references:[id])
+  componentId String
+  component Component @relation(fields:[componentId],references:[id])
+  sensorId String?
+  metric String?
+  severity String
+  message String
+  measured Float?
+  threshold Float?
+  timestamp DateTime @default(now())
+  acknowledged Boolean @default(false)
+  resolved Boolean @default(false)
+  assignee String?
+  notes String?
+  @@index([componentId,resolved])
+}
+model RiskAssessment {
+  id String @id @default(cuid())
+  componentId String
+  component Component @relation(fields:[componentId],references:[id])
+  score Int?
+  severity String
+  explanation String
+  missingInputs Json
+  modelVersion String @default("rules-v0.1")
+  confidence Float?
+  assessedAt DateTime @default(now())
+  @@index([componentId,assessedAt])
+}
+model MaintenanceRecord {
+  id String @id @default(cuid())
+  machineId String
+  machine Machine @relation(fields:[machineId],references:[id])
+  componentId String
+  component Component @relation(fields:[componentId],references:[id])
+  title String
+  scheduledAt DateTime
+  status String @default("scheduled")
+  technician String?
+  notes String?
+  createdById String?
+  createdBy User? @relation(fields:[createdById],references:[id])
+  createdAt DateTime @default(now())
+  @@index([machineId,scheduledAt])
+}
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  passwordHash String
+  role String @default("viewer")
+  maintenance MaintenanceRecord[]
+}
