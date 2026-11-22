@@ -7,4 +7,5 @@ import { Dashboard } from './pages/Dashboard'
 import { Maintenance } from './pages/Maintenance'
 import { Alerts } from './pages/Alerts'
 import { Sensors } from './pages/Sensors'
-export default function App(){return <BrowserRouter><Routes><Route element={<Frame/>}><Route index element={<Home/>}/><Route path="machines" element={<Machines/>}/><Route path="machines/:id" element={<Workspace/>}/><Route path="dashboard" element={<Dashboard/>}/><Route path="maintenance" element={<Maintenance/>}/><Route path="alerts" element={<Alerts/>}/><Route path="sensors" element={<Sensors/>}/><Route path="*" element={<Navigate to="/" replace/>}/></Route></Routes></BrowserRouter>}
+import { MonitoringCatalog } from './pages/MonitoringCatalog'
+export default function App(){return <BrowserRouter><Routes><Route element={<Frame/>}><Route index element={<Home/>}/><Route path="machines" element={<Machines/>}/><Route path="machines/:id" element={<Workspace/>}/><Route path="dashboard" element={<Dashboard/>}/><Route path="maintenance" element={<Maintenance/>}/><Route path="alerts" element={<Alerts/>}/><Route path="sensors" element={<Sensors/>}/><Route path="monitoring" element={<MonitoringCatalog/>}/><Route path="*" element={<Navigate to="/" replace/>}/></Route></Routes></BrowserRouter>}

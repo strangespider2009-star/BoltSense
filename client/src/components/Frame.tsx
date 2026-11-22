@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { NavLink,Link,Outlet,useLocation } from 'react-router-dom'
-import { Activity, Box, Bell, CalendarClock, ChevronRight, Cpu, Github, LayoutDashboard, Menu, Radar, X, Wifi, WifiOff } from 'lucide-react'
+import { Activity, Box, Bell, CalendarClock, ChevronRight, Cpu, Github, LayoutDashboard, Menu, Radar, X, Wifi, WifiOff, BookOpenCheck } from 'lucide-react'
 import { Brand } from './Brand'
 import { Glow } from './Glow'
 import { useBoltStore } from '../store/useBoltStore'
 import { useTelemetry } from '../hooks/useTelemetry'
-const navigation=[{to:'/',label:'Overview',icon:LayoutDashboard},{to:'/machines',label:'Machine Fleet',icon:Box},{to:'/dashboard',label:'Live Monitoring',icon:Activity},{to:'/maintenance',label:'Predictive Care',icon:CalendarClock},{to:'/alerts',label:'Alert Center',icon:Bell},{to:'/sensors',label:'Sensors & IoT',icon:Cpu}]
+const navigation=[{to:'/',label:'Overview',icon:LayoutDashboard},{to:'/machines',label:'Machine Fleet',icon:Box},{to:'/monitoring',label:'Component Catalog',icon:BookOpenCheck},{to:'/dashboard',label:'Live Monitoring',icon:Activity},{to:'/maintenance',label:'Predictive Care',icon:CalendarClock},{to:'/alerts',label:'Alert Center',icon:Bell},{to:'/sensors',label:'Sensors & IoT',icon:Cpu}]
 export function Frame(){
  useTelemetry();const [open,setOpen]=useState(false);const mode=useBoltStore(s=>s.mode);const setMode=useBoltStore(s=>s.setMode);const connected=useBoltStore(s=>s.connected);const location=useLocation()
  const active=navigation.find(n=>location.pathname===n.to||n.to==='/machines'&&location.pathname.startsWith('/machines/'))?.label||'Workspace'

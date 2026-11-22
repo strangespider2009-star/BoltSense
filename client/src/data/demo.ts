@@ -1,4 +1,5 @@
 import type { Alert, Component, Machine, Maintenance, Sensor } from '../types'
+import { enrichMonitoringCatalog } from './monitoringCatalog'
 export const machines: Machine[] = [
   {id:'cnc-001',name:'CNC Milling Machine',type:'VMX-450',description:'High-precision vertical machining center',status:'warning',category:'Machining',image:'cnc',connected:6,total:7,healthScore:84,modelAvailable:true},
   {id:'lathe-002',name:'CNC Lathe',type:'TL-220',description:'Computer-controlled turning and finishing',status:'healthy',category:'Machining',image:'lathe',connected:4,total:4,healthScore:96},
@@ -25,10 +26,11 @@ export const components: Component[] = [
  {id:'comp-motor-01',machineId:'comp-007',name:'Compressor Motor',type:'Electric motor',location:'Motor bay',status:'healthy',sensorIds:['comp-current-01'],riskScore:11,basis:'Demo baseline within limits',readings:{motorCurrentA:11.8},recommendedAction:'Routine inspection.'},
  {id:'motor-shaft-01',machineId:'motor-008',name:'Motor Shaft',type:'Drive shaft',location:'Shaft end',status:'healthy',sensorIds:['motor-vib-01'],riskScore:14,basis:'Demo baseline within limits',readings:{vibrationRmsMmS:1.2},recommendedAction:'Routine inspection.'},
 ]
+components.push(...enrichMonitoringCatalog(components))
 const date = (mins:number) => new Date(Date.now() - mins*60000).toISOString()
 export const sensors:Sensor[] = [
  ...[['temp-01','cnc-001','spindle-bearing-01','Temperature','°C'],['vibration-01','cnc-001','spindle-bearing-01','Vibration','mm/s'],['current-01','cnc-001','spindle-motor-01','Electrical','A'],['load-01','cnc-001','x-axis-guide-01','Load','N'],['temp-02','cnc-001','coolant-pump-01','Temperature','°C'],['vibration-02','cnc-001','z-axis-screw-01','Vibration','mm/s'],['temp-03','cnc-001','power-coupling-01','Temperature','°C']].map(([id,machineId,componentId,kind,unit],i)=>({id,machineId,componentId,kind,unit,status:(i===6?'offline':'online') as Sensor['status'],lastSeen:i===6?date(55):date(i),hardwareId:`PI-CNC-A/${id}`,calibratedAt:'2026-10-15T10:30:00Z',sampleRateHz:1})),
- ...components.filter(c=>c.machineId!=='cnc-001').map(c=>({id:c.sensorIds[0]||`virtual-${c.id}`,machineId:c.machineId,componentId:c.id,kind:'Condition',unit:'varies',status:'online' as const,lastSeen:date(1),hardwareId:`PI-${c.machineId}`,calibratedAt:'2026-10-11T12:00:00Z',sampleRateHz:1}))
+ ...components.filter(c=>c.machineId!=='cnc-001' && c.sensorIds.length>0).map(c=>({id:c.sensorIds[0]||`virtual-${c.id}`,machineId:c.machineId,componentId:c.id,kind:'Condition',unit:'varies',status:'online' as const,lastSeen:date(1),hardwareId:`PI-${c.machineId}`,calibratedAt:'2026-10-11T12:00:00Z',sampleRateHz:1}))
 ]
 export const alerts:Alert[] = [
  {id:'ALT-1032',machineId:'press-004',componentId:'press-cylinder-01',severity:'critical',message:'Hydraulic cylinder load above configured demo limit',measured:'8,900 N',threshold:'8,500 N',timestamp:date(4),acknowledged:false,resolved:false},
