@@ -1,1 +1,1 @@
-// BoltSense config scaffold
+module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } }
