@@ -1,4 +1,6 @@
 import express from 'express'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import helmet from 'helmet'
 import cors from 'cors'
 import rateLimit from 'express-rate-limit'
@@ -27,4 +29,18 @@ app.get('/api/alerts',async(_req,res)=>{try{if(isDemo())return res.json(demoAler
 app.post('/api/alerts/:id/acknowledge',requireRole(['admin','technician']),async(req,res)=>{try{const parsed=postAck.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:parsed.error.flatten()});if(!idSchema.safeParse(req.params.id).success)return res.status(400).json({error:'Invalid alert ID'});if(isDemo())return res.status(409).json({error:'Demo alerts can only be acknowledged in the demo UI'});const db=database();if(!db)return unavailable(res);const row=await db.alert.findUnique({where:{id:req.params.id}});if(!row)return res.status(404).json({error:'Alert not found'});res.json(await db.alert.update({where:{id:req.params.id},data:{acknowledged:true,assignee:parsed.data.assignee,notes:parsed.data.notes}}))}catch{res.status(500).json({error:'Could not acknowledge alert'})}})
 app.get('/api/maintenance',async(_req,res)=>{try{if(isDemo())return res.json(demoMaintenance.map(m=>({...m,source:'SIMULATED DEMO'})));const db=database();if(!db)return unavailable(res);res.json(await db.maintenanceRecord.findMany({orderBy:{scheduledAt:'asc'}}))}catch{res.status(500).json({error:'Could not load maintenance'})}})
 app.post('/api/maintenance',requireRole(['admin','technician']),async(req,res)=>{try{const parsed=postMaintenance.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:parsed.error.flatten()});if(isDemo())return res.status(409).json({error:'Demo writes are disabled'});const db=database();if(!db)return unavailable(res);const target=await db.component.findUnique({where:{id:parsed.data.componentId}});if(!target||target.machineId!==parsed.data.machineId)return res.status(400).json({error:'Invalid machine/component mapping'});const record=await db.maintenanceRecord.create({data:{...parsed.data,scheduledAt:new Date(parsed.data.scheduledAt),status:'scheduled'}});res.status(201).json(record)}catch{res.status(500).json({error:'Could not create work order'})}})
-app.use((_req,res)=>res.status(404).json({error:'Route not found'}))
+// Serve the built Vite SPA from the same Render service as the API.
+if (process.env.NODE_ENV === 'production') {
+  const clientDist = fileURLToPath(new URL('../../client/dist/', import.meta.url))
+  app.use(express.static(clientDist))
+  app.get('*', (req, res) => {
+    if (req.path === '/api' || req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: 'Route not found' })
+    }
+    return res.sendFile(path.join(clientDist, 'index.html'), (err) => {
+      if (err && !res.headersSent) res.status(404).json({ error: 'Frontend build not found' })
+    })
+  })
+} else {
+  app.use((_req, res) => res.status(404).json({ error: 'Route not found' }))
+}
