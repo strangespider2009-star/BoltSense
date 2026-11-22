@@ -11,8 +11,11 @@ export const twinContext = createContext<{ components: Map<string, Component>; f
 const healthColor: Record<Health,string> = { healthy: '#41c997', warning: '#ffbc57', critical: '#ff5263', unknown: '#a6a19a' }
 const materialBaseColors = new WeakMap<THREE.MeshStandardMaterial, THREE.Color>()
 const materialInitialState = new WeakMap<THREE.MeshStandardMaterial, {opacity:number;transparent:boolean;depthWrite:boolean}>()
-/** Translucent access covers expose the machine's inner working parts. */
-const accessCovers = new Set(['cnc-enclosure-01','lathe-enclosure-01','conv-safety-guard-01','pump-volute-01','comp-air-end-01','motor-stator-01'])
+/** Detailing is preserved, but shells become translucent so internal assemblies can be found. */
+const accessCovers = new Set([
+ 'cnc-enclosure-01','lathe-enclosure-01','conv-safety-guard-01',
+ 'pump-volute-01','comp-air-end-01','motor-stator-01'
+])
 
 /** Groups preserve independent, stable component IDs even if the assembly has many individual meshes. */
 export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:ModelPartProps){
@@ -35,7 +38,7 @@ export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:Mo
  },[selected,selectedId,focus])
  const instrumented=!!component?.sensorIds.length
  const temp=mode==='demo'?component?.readings.temperatureC:(id?readings[id]?.metrics.temperatureC:undefined)
- const overlayColor = !instrumented ? healthColor.unknown : risk ? mode==='demo'?healthColor[component?.status||'unknown']:healthColor.unknown : thermal ? temp===undefined?healthColor.unknown:temp>65?'#fc7657':temp>50?'#fac05b':'#3ce4cd' : '#59f1e6'
+ const overlayColor = !instrumented ? healthColor.unknown : risk ? mode==='demo'?healthColor[component?.status||'unknown']:healthColor.unknown : thermal ? temp===undefined?healthColor.unknown:temp>65?'#fc7657':temp>50?'#fac05b':'#3ce4cd' : '#ff8e41'
  // Only color surfaces when a visualization overlay is enabled; preserve original PBR materials otherwise.
  useEffect(()=>{
   if (!group.current) return
@@ -47,13 +50,13 @@ export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:Mo
    let base=materialBaseColors.get(mat)
    if (!base){base=mat.color.clone();materialBaseColors.set(mat,base)}
    let initial=materialInitialState.get(mat)
-   if(!initial){initial={opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite};materialInitialState.set(mat,initial)}
-   const ghost=xray && !!id && accessCovers.has(id)
-   mat.opacity=initial.opacity*(ghost?.16:1)
-   mat.transparent=initial.transparent||ghost
-   mat.depthWrite=initial.depthWrite&&!ghost
-   // Ghosted shell meshes should not intercept clicks intended for hidden parts.
-   child.raycast=ghost?(()=>undefined):THREE.Mesh.prototype.raycast
+   if (!initial){initial={opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite};materialInitialState.set(mat,initial)}
+   const ghost = xray && !!id && accessCovers.has(id)
+   mat.opacity = initial.opacity * (ghost ? .16 : 1)
+   mat.transparent = initial.transparent || ghost
+   mat.depthWrite = initial.depthWrite && !ghost
+   // Ghosted covers must not prevent selecting the assemblies behind them.
+   child.raycast = ghost ? (() => undefined) : THREE.Mesh.prototype.raycast
    mat.color.copy(base).lerp(overlay,(risk||thermal)? .48 : (selected||hover)? .14 : 0)
    mat.emissive.set((selected||hover)?overlay:'#000000')
    mat.emissiveIntensity=selected?.21:hover?.11:0

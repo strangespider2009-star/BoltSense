@@ -57,22 +57,19 @@
 @media(max-width:1000px){.catalog-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.catalog-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.catalog-summary>div{padding:12px}.catalog-summary strong{font-size:24px}.catalog-controls>.catalog-search{min-width:100%}}
 
-
-/* BOLTSENSE FOUNDRY — industrial charcoal, molten orange, forge lighting */
-:root{color:#f3eee8;background:#080706;--forge-accent:#ff8739;--forge-border:#513526}
+/* BOLTSENSE / FOUNDRY EDITION — charcoal, molten orange, steel and furnace glow */
+:root{color:#f3eee8;background:#080706;--forge-accent:#ff8739;--forge-ember:#e95622;--forge-border:#513526;--forge-muted:#b4a396}
 body{background:#080706;color:#f3eee8}
 ::selection{background:rgba(255,126,48,.34)}
 :focus-visible{outline:2px solid #ff984e}
 .shell{background:radial-gradient(ellipse at 62% -7%,rgba(161,56,17,.15),transparent 52%),radial-gradient(ellipse at 98% 46%,rgba(67,22,13,.1),transparent 46%),#080706}
-.shell:before{background-image:linear-gradient(#d26b2d12 1px,transparent 1px),linear-gradient(90deg,#d26b2d12 1px,transparent 1px);background-size:46px 46px}
+.shell:before{background-image:linear-gradient(#d26b2d12 1px,transparent 1px),linear-gradient(90deg,#d26b2d12 1px,transparent 1px);opacity:.2;background-size:46px 46px}
 .cursor-glow{background:radial-gradient(circle,rgba(255,111,35,.15),rgba(185,64,16,.048) 40%,transparent 68%)}
 .sidebar{background:linear-gradient(155deg,#12100e,#090808 64%);border-right-color:#39261e}
 .topbar{background:#100d0be9;border-bottom-color:#3c281e}
 .app-footer{border-top-color:#39251e;color:#94897f}
-.brand-mark,.brand-accent{color:#ff963f}.brand small{color:#ae8c73}
-.brand-mark svg{filter:drop-shadow(0 0 10px #ff6a2560)}
-.sidebar-section,.breadcrumb,.micro{color:#aa8069}
-.nav-item{color:#a99a8e}.nav-item:hover{background:#241710;color:#fff3e9}
+.brand-mark,.brand-accent{color:#ff963f}.brand small{color:#ae8c73}.brand-mark svg{filter:drop-shadow(0 0 10px #ff6a2560)}
+.sidebar-section,.breadcrumb,.micro{color:#aa8069}.nav-item{color:#a99a8e}.nav-item:hover{background:#241710;color:#fff3e9}
 .nav-item.active{color:#ffaf68;background:linear-gradient(90deg,#632d19ad,#27161143);box-shadow:inset 3px 0 #ff8138}
 .node-card,.panel{background:linear-gradient(150deg,#191310,#100e0c 78%);border-color:#402c22;box-shadow:0 9px 30px #00000023}
 .node-title,.model-badge,.eyebrow,.hero-kicker,.text-link,.teal-text{color:#ff9a52}
@@ -83,66 +80,45 @@ body{background:#080706;color:#f3eee8}
 .page-heading p,.section-heading p{color:#b6a499}
 .btn-primary{background:linear-gradient(125deg,#ff9f48,#f16629);color:#251008;box-shadow:0 0 22px #e964293d}
 .btn-primary:hover{background:linear-gradient(115deg,#ffb767,#ff8a3b)}
-.btn-outline{background:#231610;border-color:#68432e;color:#f2d8c5}
-.btn-outline:hover{background:#342115;border-color:#ff964b}
+.btn-outline{background:#231610;border-color:#68432e;color:#f2d8c5}.btn-outline:hover{background:#342115;border-color:#ff964b}
 .btn-ghost{color:#f5b789}.btn-ghost:hover{background:#3b2419}
 .kpi-card{background:linear-gradient(148deg,#1d1511,#100d0c);border-color:#493020}
-.kpi-card:after{border-color:#df612626}
-.kpi-icon{background:#3b2018;border-color:#75422b!important;color:#ffad69!important}
+.kpi-card:after{border-color:#df612626}.kpi-icon{background:#3b2018;border-color:#75422b!important;color:#ffad69!important}
 .kpi-number{color:#f8ece0}.kpi-foot,.kpi-name{color:#b79c8c}
 .hero{border-color:#714026;background:radial-gradient(circle at 90% 17%,#91370e49,transparent 56%),linear-gradient(120deg,#1e1511,#0b0a09 74%);box-shadow:0 26px 65px #0007,inset 0 1px #eb9d5430}
 .hero:before{background-image:linear-gradient(#e8682015 1px,transparent 1px),linear-gradient(90deg,#e8682015 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to right,transparent,black)}
-.hero h1{color:#fff5ea}.accent{color:#ff9b46}
-.text-gradient{background:linear-gradient(92deg,#ffe6bf,#ff8b35 52%,#ea521e);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-copy>p{color:#d6bdb0}.hero-kicker{letter-spacing:.19em}.hero-trust{color:#ebbf9a}
-.hero-trust svg{color:#ff8b3c}
-.hero-art{isolation:isolate}.hero-art:before{background:radial-gradient(circle,#ff762c26,#f04d1710 43%,transparent 75%);filter:blur(7px)}
+.hero h1{color:#fff5ea}.accent{color:#ff9b46}.text-gradient{background:linear-gradient(92deg,#ffe6bf,#ff8b35 52%,#ea521e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy>p{color:#d6bdb0}.hero-kicker{letter-spacing:.19em}.hero-trust{color:#ebbf9a}.hero-trust svg{color:#ff8b3c}
+.hero-art{isolation:isolate}.hero-art:before{height:330px;width:330px;background:radial-gradient(circle,#ff762c26,#f04d1710 43%,transparent 75%);filter:blur(7px)}
 .hero-art:after{content:"";position:absolute;width:min(80%,400px);height:250px;bottom:-90px;z-index:-1;opacity:.55;pointer-events:none;background:radial-gradient(ellipse at 55% 100%,#f35a2d8a 0%,#c5421b3e 29%,transparent 68%);animation:forge-flicker 2.8s ease-in-out infinite alternate}
-.hero-factory{filter:drop-shadow(0 0 32px #f36e3773)}.hero-factory>svg,.hero-inner-cog{color:#e98942}
-.hero-rings .ring{border-color:#f28c3842;box-shadow:0 0 22px #ff712a21}
-.hero-data{border-color:#89502e;background:#211511dd}.hero-data strong{color:#ffc184}.hero-art-label{color:#a98567}
-.furnace-flames{position:absolute;z-index:0;display:flex;justify-content:center;align-items:flex-end;gap:4px;bottom:34px;left:17%;right:17%;height:180px;filter:blur(5px) drop-shadow(0 0 20px #ff5419a9);opacity:.55;pointer-events:none}
-.furnace-flames i{display:block;flex:1;height:80px;max-width:42px;background:linear-gradient(to top,#e43e19d9,#ff9b41b0 48%,#ffe0a755 68%,transparent);border-radius:65% 0 62% 45%;transform-origin:50% 100%;animation:furnace-sway 1.8s ease-in-out infinite alternate}
-.furnace-flames i:nth-child(2){height:110px;animation-delay:-.9s}
-.furnace-flames i:nth-child(3){height:150px;animation-delay:-.3s}
-.furnace-flames i:nth-child(4){height:130px;animation-delay:-1.2s}
-.furnace-flames i:nth-child(5){height:160px;animation-delay:-.6s}
-.furnace-flames i:nth-child(6){height:105px;animation-delay:-1.5s}
-.hero-factory,.hero-data,.hero-art-label,.hero-rings{z-index:1}
-@keyframes furnace-sway{0%{transform:scaleY(.75) rotate(-8deg);opacity:.5}100%{transform:scaleY(1.13) rotate(12deg);opacity:.9}}
-.machine-card{background:linear-gradient(145deg,#211610,#120f0c);border-color:#4b2f22}
-.machine-card:hover{border-color:#e87f3c;box-shadow:0 16px 35px #070302dd,0 0 24px #fa6a252b}
+.hero-factory{filter:drop-shadow(0 0 32px #f36e3773)}.hero-factory>svg,.hero-inner-cog{color:#e98942}.hero-rings .ring{border-color:#f28c3842;box-shadow:0 0 22px #ff712a21}.hero-data{border-color:#89502e;background:#211511dd}.hero-data strong{color:#ffc184}.hero-art-label{color:#a98567}
+.machine-card{background:linear-gradient(145deg,#211610,#120f0c);border-color:#4b2f22}.machine-card:hover{border-color:#e87f3c;box-shadow:0 16px 35px #070302dd,0 0 24px #fa6a252b}
 .machine-visual{background:radial-gradient(ellipse at 50% 50%,#4e2819,#191410 64%)}
-.twin-container{border-color:#63412c}
-.twin-viewport{background:radial-gradient(ellipse at 55% 42%,#302016,#0a0908 72%)}
-.twin-toolbar{border-color:#513726;background:#160e0b}
-.twin-toolbar button,.parts-filters button{border-color:#593b2a;background:#211711;color:#d1a98c}
+.twin-container{border-color:#63412c}.twin-viewport{background:radial-gradient(ellipse at 55% 42%,#302016,#0a0908 72%)}
+.twin-toolbar{border-color:#513726;background:#160e0b}.twin-toolbar button,.parts-filters button{border-color:#593b2a;background:#211711;color:#d1a98c}
 .twin-toolbar button:hover,.parts-filters button:hover{border-color:#fa8d44;color:#fff0da}
 .twin-toolbar button.tool-on,.parts-filters button.active{color:#ffb877;border-color:#c87838;background:#502818}
-.twin-watermark,.twin-orientation{color:#bd916c}
-.twin-bottom-info{color:#ae8d78}.inspector-header{border-color:#553827}
+.twin-watermark,.twin-orientation{color:#bd916c}.twin-watermark span{color:#a57855}
+.twin-bottom-info{color:#ae8d78}.inspector-header{border-color:#553827}.inspector-health{color:#eec1a1}
 .parts-search,.catalog-controls select,.catalog-controls>.catalog-search{background:#211510;border-color:#5a3b29;color:#f4e4d3}
 .parts-search:focus{border-color:#f7984c;box-shadow:0 0 0 2px #fb8b3424}
-.parts-catalog-intro{color:#caab95}
-.part-entry:hover{background:#332016}
-.part-active{background:linear-gradient(90deg,#5b2c18,#21140e)!important;border-color:#d27b40!important}
+.parts-catalog-intro{color:#caab95}.parts-footer{border-color:#4c2f20}
+.part-entry:hover{background:#332016}.part-active{background:linear-gradient(90deg,#5b2c18,#21140e)!important;border-color:#d27b40!important}
 .inspection-coverage,.catalog-disclaimer{background:linear-gradient(120deg,#3e2317,#1b1410);border-color:#70412b}
-.inspection-coverage strong,.catalog-disclaimer strong{color:#ffdbb1}
-.inspection-coverage p,.catalog-disclaimer p{color:#cfaa94}
-.risk-box,.metric-tile{background:#1e1511;border-color:#483021}
+.inspection-coverage strong,.catalog-disclaimer strong{color:#ffdbb1}.inspection-coverage p,.catalog-disclaimer p{color:#cfaa94}
+.risk-box,.metric-tile{background:#1e1511;border-color:#483021}.risk-track{background:#3e2518}
 .catalog-summary>div{background:linear-gradient(145deg,#27170f,#15100d);border-color:#523424}
-.catalog-table th{background:#2a1b12;border-color:#5b3521;color:#e1ab81}
-.catalog-table td{border-color:#3e2a21;color:#d1beb1}
-.catalog-pill{background:#3c271d;color:#f1c69f}
-.catalog-state.planned{background:#39261d;color:#edc8aa}
-/* 3D component markers show every catalog part, including planned targets. */
+.catalog-table th{background:#2a1b12;border-color:#5b3521;color:#e1ab81}.catalog-table td{border-color:#3e2a21;color:#d1beb1}
+.catalog-pill{background:#3c271d;color:#f1c69f}.catalog-state.planned{background:#39261d;color:#edc8aa}
+.catalog-sensor svg{color:#f69f62}
+/* Selectable numbered locator pins: ALL modeled inspection targets, even uninstrumented parts. */
 .twin-label.component-pin{display:flex!important;align-items:center;gap:5px;background:#1b100cee!important;border:1px solid #f88c46a8!important;padding:4px 6px!important;color:#ffdec0!important;border-radius:18px!important;box-shadow:0 3px 15px #000c,0 0 12px #ff66141b!important;max-width:160px}
-.twin-label.component-pin:hover,.twin-label.component-pin.selected{background:#6b311aee!important;border-color:#ffc57e!important;box-shadow:0 4px 19px #000d,0 0 15px #fd82298f!important}
+.twin-label.component-pin:hover,.twin-label.component-pin.selected{background:#6b311aee!important;border-color:#ffc57e!important;box-shadow:0 4px 19px #000d,0 0 15px #fd82298f!important;z-index:100}
 .twin-label-number{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 4px;flex:none;border-radius:99px;background:linear-gradient(130deg,#ffb566,#f46d28);color:#231109;font-size:9px;font-weight:900}
 .twin-label-name{font-size:9px;font-weight:700;overflow:hidden;text-overflow:ellipsis;max-width:115px}
 .twin-label.component-pin small{font-size:7px;color:#ffe2ad}
 .twin-label.component-pin.planned{border-style:dashed!important}
-/* Scroll-driven production-bay CNC viewer. */
+/* Production bay: the viewer scrolls past a stationary, warming CNC mill. */
 .forge-scroll{position:relative;height:115vh;min-height:740px;margin:30px 0 34px}
 .forge-stick{position:sticky;top:84px;display:flex;flex-direction:column;max-height:calc(100vh - 92px);min-height:620px}
 .forge-stage-heading{margin-bottom:13px;z-index:2;pointer-events:none}
@@ -151,11 +127,11 @@ body{background:#080706;color:#f3eee8}
 .forge-stage-heading h2 span{color:#ff994f}
 .forge-stage-heading p{font-size:12px;color:#c7a68e;max-width:720px;line-height:1.6;margin:0}
 .forge-stage{position:relative;flex:1;min-height:415px;background:radial-gradient(ellipse at 58% 46%,#5c2c17,#1b100c 58%,#0a0807 100%);border:1px solid #824426;border-radius:17px;overflow:hidden;box-shadow:inset 0 0 90px #000a,0 25px 70px #0006}
-.forge-stage:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.42;background:repeating-linear-gradient(0deg,transparent 0 55px,#ff793512 55px 56px),repeating-linear-gradient(90deg,transparent 0 55px,#ff793512 55px 56px)}
+.forge-stage:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.42;background:repeating-linear-gradient(0deg,transparent 0 55px,#ff793512 55px 56px),repeating-linear-gradient(90deg,transparent 0 55px,#ff793512 55px 56px)}
 .forge-stage:after{content:"";position:absolute;left:-14%;bottom:-54%;height:400px;width:65%;background:radial-gradient(ellipse,#ff541e85,transparent 65%);pointer-events:none;filter:blur(32px);opacity:.5;transition:opacity .65s ease}
 .forge-stage-running:after{opacity:1;animation:forge-flicker 1.6s ease-in-out infinite alternate}
-.forge-canvas{position:absolute;inset:0;z-index:1}
-.forge-canvas canvas{height:100%!important;width:100%!important}
+.forge-canvas{position:absolute;inset:0;z-index:1}.forge-canvas canvas{height:100%!important;width:100%!important}
+.forge-stage-lines{position:absolute;inset:0;pointer-events:none;border:1px solid #ffaf5730;z-index:3}
 .forge-machine-status{position:absolute;z-index:4;top:20px;left:22px;display:flex;align-items:center;gap:12px;background:#110b09dd;border:1px solid #79472b;border-radius:10px;padding:12px 14px;box-shadow:0 5px 18px #0006;pointer-events:none}
 .forge-machine-status small{display:block;color:#b99579;font-size:9px;letter-spacing:.12em;font-weight:700}
 .forge-machine-status strong{color:#ffe7cd;font-size:14px;letter-spacing:.03em}
@@ -172,10 +148,19 @@ body{background:#080706;color:#f3eee8}
 .forge-scroll-hint svg{animation:forge-nudge 1.8s ease-in-out infinite}
 .forge-embers{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;opacity:.25;transition:opacity .5s}
 .forge-stage-running .forge-embers{opacity:.86}
-.forge-embers i{position:absolute;display:block;width:3px;height:8px;bottom:-12px;background:#ffa452;border-radius:50%;box-shadow:0 0 10px #ff761c,0 0 5px #ffc06d;animation:forge-ember-rise 1.9s linear infinite}
+.forge-embers i{position:absolute;display:block;width:3px;height:8px;left:var(--ember-left);bottom:-12px;background:#ffa452;border-radius:50%;box-shadow:0 0 10px #ff761c,0 0 5px #ffc06d;animation:forge-ember-rise calc(1.5s + (var(--ember-i) * .055s)) linear infinite;animation-delay:var(--ember-delay)}
 @keyframes forge-ember-rise{0%{transform:translate3d(0,0,0) scale(.5);opacity:0}15%{opacity:.85}100%{transform:translate3d(60px,-430px,0) scale(.15);opacity:0}}
 @keyframes forge-nudge{50%{transform:translateY(5px)}}
 @keyframes forge-flicker{0%{opacity:.38;transform:scale(.97)}100%{opacity:.72;transform:scale(1.08)}}
+/* Geometry and telemetry remain distinctly labelled as simulations. */
 @media(max-width:920px){.forge-scroll{height:96vh;min-height:650px}.forge-stick{top:68px;min-height:570px}.forge-stage{min-height:350px}.forge-sim-metrics{left:14px;right:14px;justify-content:center}.twin-label-name{font-size:8px;max-width:78px}}
-@media(max-width:580px){.forge-scroll{height:90vh;min-height:570px;margin:20px 0}.forge-stick{top:62px;min-height:505px}.forge-stage-heading h2{font-size:29px}.forge-stage-heading p{font-size:10px}.forge-stage{min-height:312px}.forge-machine-status{top:12px;left:10px;padding:8px}.forge-machine-status small{font-size:7px}.forge-machine-status strong{font-size:10px}.forge-sim-metrics{bottom:39px}.forge-sim-metrics span{font-size:7px;padding:5px}.forge-sim-metrics strong{font-size:7px}.twin-label.component-pin{padding:3px!important}.twin-label-number{min-width:17px;height:17px;font-size:8px}.twin-label-name{display:none}.twin-label.component-pin.selected .twin-label-name{display:inline;max-width:90px}.twin-label.component-pin small{display:none}}
-@media(prefers-reduced-motion:reduce){.furnace-flames i,.forge-embers i,.forge-stage:after,.forge-scroll-hint svg,.hero-art:after{animation:none!important}.forge-progress>div{transition:none}.forge-embers{opacity:0}}
+@media(max-width:580px){.forge-scroll{height:90vh;min-height:570px;margin:20px 0}.forge-stick{top:62px;min-height:505px}.forge-stage-heading h2{font-size:29px}.forge-stage-heading p{font-size:10px}.forge-stage{min-height:312px}.forge-machine-status{top:12px;left:10px;padding:8px}.forge-machine-status small{font-size:7px}.forge-machine-status strong{font-size:10px}.forge-sim-metrics{bottom:39px}.forge-sim-metrics span{font-size:7px;padding:5px}.forge-sim-metrics strong{font-size:7px}.twin-label.component-pin{padding:3px!important}.twin-label-number{width:17px;min-width:17px;height:17px;font-size:8px}.twin-label-name{display:none}.twin-label.component-pin.selected .twin-label-name{display:inline;max-width:90px}.twin-label.component-pin small{display:none}}
+@media(prefers-reduced-motion:reduce){.forge-embers i,.forge-stage:after,.forge-scroll-hint svg,.hero-art:after{animation:none!important}.forge-progress>div{transition:none}.forge-embers{opacity:0}}
+
+/* Stylized furnace flames behind the hero factory silhouette. */
+.furnace-flames{position:absolute;z-index:0;display:flex;justify-content:center;align-items:flex-end;gap:4px;bottom:34px;left:17%;right:17%;height:180px;filter:blur(5px) drop-shadow(0 0 20px #ff5419a9);opacity:.55;pointer-events:none}
+.furnace-flames i{display:block;flex:1;height:calc(58px + (var(--flame-height,1) * 12px));max-width:42px;background:linear-gradient(to top,#e43e19d9,#ff9b41b0 48%,#ffe0a755 68%,transparent);border-radius:65% 0 62% 45%;transform-origin:50% 100%;animation:furnace-sway 1.8s ease-in-out infinite alternate}
+.furnace-flames i:nth-child(2){height:110px;animation-delay:-.9s}.furnace-flames i:nth-child(3){height:150px;animation-delay:-.3s}.furnace-flames i:nth-child(4){height:130px;animation-delay:-1.2s}.furnace-flames i:nth-child(5){height:160px;animation-delay:-.6s}.furnace-flames i:nth-child(6){height:105px;animation-delay:-1.5s}
+.hero-factory,.hero-data,.hero-art-label,.hero-rings{z-index:1}
+@keyframes furnace-sway{0%{transform:scaleY(.75) rotate(-8deg);opacity:.5}100%{transform:scaleY(1.13) rotate(12deg);opacity:.9}}
+@media(prefers-reduced-motion:reduce){.furnace-flames i{animation:none!important;transform:none}}

@@ -1,11 +1,10 @@
-
-import { useEffect, useRef, useState, Suspense } from 'react'
+import { useEffect, useRef, useState, Suspense, type CSSProperties } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ContactShadows, Grid, PerspectiveCamera } from '@react-three/drei'
-import { Flame, ArrowDown, Activity, Gauge } from 'lucide-react'
+import { Activity, ArrowDown, Flame, Gauge, Wrench } from 'lucide-react'
 import { CncModel } from './twin/CncModel'
 
-function FactoryScene({running,power}:{running:boolean;power:number}) {
+function ForgeMachine({running,power}:{running:boolean;power:number}){
  return <>
   <PerspectiveCamera makeDefault position={[8.3,5.5,11.8]} fov={39} near={.1} far={80}/>
   <ambientLight intensity={.86}/>
@@ -19,40 +18,41 @@ function FactoryScene({running,power}:{running:boolean;power:number}) {
  </>
 }
 
-/** Illustrative motion only; respects the operating system's reduced-motion preference. */
+/** The machine is idle at page load; scrolling into the production bay winds it up. */
 export function ScrollForge(){
- const section=useRef<HTMLElement>(null)
+ const ref=useRef<HTMLElement>(null)
  const [progress,setProgress]=useState(0)
  const [visible,setVisible]=useState(false)
  const [reduceMotion,setReduceMotion]=useState(false)
  useEffect(()=>{
   const media=window.matchMedia('(prefers-reduced-motion: reduce)')
-  const onMotion=()=>setReduceMotion(media.matches)
-  onMotion();media.addEventListener?.('change',onMotion)
-  const onScroll=()=>{
-   if(!section.current)return
-   const bounds=section.current.getBoundingClientRect()
-   const vh=Math.max(1,window.innerHeight)
-   setVisible(bounds.bottom>0 && bounds.top<vh)
-   const value=Math.min(1,Math.max(0,(vh*.86-bounds.top)/(vh*.95)))
-   setProgress(old=>Math.abs(old-value)>.005?value:old)
+  const updateMotion=()=>setReduceMotion(media.matches)
+  updateMotion();media.addEventListener?.('change',updateMotion)
+  const update=()=>{
+   if(!ref.current)return
+   const bounds=ref.current.getBoundingClientRect()
+   const viewport=Math.max(window.innerHeight,1)
+   setVisible(bounds.bottom>0 && bounds.top<viewport)
+   const value=Math.max(0,Math.min(1,(viewport*.86-bounds.top)/(viewport*.95)))
+   setProgress(v=>Math.abs(v-value)>.005?value:v)
   }
-  onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll)
-  return ()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);media.removeEventListener?.('change',onMotion)}
+  update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update)
+  return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);media.removeEventListener?.('change',updateMotion)}
  },[])
- const running=progress>.18 && visible && !reduceMotion
- const power=reduceMotion?0:Math.min(1,Math.max(0,(progress-.18)/.55))
- return <section className="forge-scroll" ref={section} aria-label="Scroll-activated CNC machine production preview">
+ const running=progress>.18&&visible&&!reduceMotion
+ const power=reduceMotion?0:Math.max(0,Math.min(1,(progress-.18)/.55))
+ return <section ref={ref} className="forge-scroll" aria-label="Scroll-activated CNC production demonstration">
   <div className="forge-stick">
-   <div className="forge-stage-heading"><span className="eyebrow"><Flame size={15}/> PRODUCTION BAY · INTERACTIVE MACHINE</span><h2>Built for the <span>factory floor.</span></h2><p>Scroll to power up the CNC milling machine. The spindle and table move as an illustrative 3D demonstration.</p></div>
-   <div className={'forge-stage '+(running?'forge-stage-running':'')}>
-    <div className="forge-embers" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{left:(8+(i*37)%84)+'%',animationDelay:(i%7)*-.4+'s'}}/>)}</div>
-    <div className="forge-canvas"><Canvas dpr={[1,1.5]} shadows gl={{alpha:true,antialias:true,powerPreference:'high-performance'}}><Suspense fallback={null}><FactoryScene running={running} power={power}/></Suspense></Canvas></div>
-    <div className="forge-machine-status"><span className={'forge-status-led '+(running?'lit':'')}/><div><small>STATUS · VISUAL DEMONSTRATION</small><strong>{reduceMotion?'MOTION REDUCED':running?'CNC MILL / RUNNING':'CNC MILL / STANDBY'}</strong></div></div>
-    <div className="forge-sim-metrics"><span><Gauge size={14}/> SPINDLE <strong>{running?'ROTATING':'IDLE'}</strong></span><span><Activity size={14}/> AXES <strong>{running?'MOVING':'STANDBY'}</strong></span></div>
-    <div className="forge-progress"><div style={{width:Math.round(progress*100)+'%'}}/><span>{Math.round(progress*100)}% · SCROLL TO START</span></div>
+   <div className="forge-stage-heading"><span className="eyebrow"><Flame size={15}/> THE PRODUCTION BAY / INTERACTIVE PREVIEW</span><h2>Built for the <span>factory floor.</span></h2><p>Scroll through this section to power up the CNC milling machine and watch the spindle and worktable move. Demonstration motion only.</p></div>
+   <div className={`forge-stage ${running?'forge-stage-running':''}`}>
+    <div className="forge-embers" aria-hidden="true">{Array.from({length:21},(_,i)=><i key={i} style={{'--ember-i':i,'--ember-delay':`${(i%7)*-.42}s`,'--ember-left':`${7+(i*41)%86}%`} as CSSProperties}/>)}</div>
+    <div className="forge-stage-lines" aria-hidden="true"/>
+    <div className="forge-canvas"><Canvas dpr={[1,1.5]} shadows gl={{alpha:true,antialias:true,powerPreference:'high-performance'}}><Suspense fallback={null}><ForgeMachine running={running} power={power}/></Suspense></Canvas></div>
+    <div className="forge-machine-status"><span className={`forge-status-led ${running?'lit':''}`}/><div><small>MACHINE STATUS · DEMONSTRATION</small><strong>{reduceMotion?'MOTION REDUCED':running?'CNC MILL / CYCLING':'CNC MILL / STANDBY'}</strong></div></div>
+    <div className="forge-sim-metrics"><span><Gauge size={14}/> SPINDLE DRIVE <strong>{running?'ANIMATED':'IDLE'}</strong></span><span><Activity size={14}/> AXIS MOTION <strong>{running?'ACTIVE':'PARKED'}</strong></span><span><Wrench size={14}/> CUTTING <strong>VISUAL DEMO</strong></span></div>
+    <div className="forge-progress"><div style={{width:`${Math.round(progress*100)}%`}}/><span>{Math.round(progress*100)}% / SCROLL TO START</span></div>
    </div>
-   <div className="forge-scroll-hint"><ArrowDown size={14}/> {running?'FACTORY PRODUCTION PREVIEW ACTIVE':'SCROLL TO ACTIVATE THE MACHINE'}</div>
+   <div className="forge-scroll-hint"><ArrowDown size={14}/> {running?'PRODUCTION PREVIEW ACTIVE':'SCROLL TO ACTIVATE THE MACHINE'}</div>
   </div>
  </section>
 }

@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { Part, Box, Cylinder, Torus, Pipe, CoolingFins, Bolt, LightStack } from './TwinParts'
 
 const shell='#d9e1e6', steel='#7a939f', navy='#233c50', blue='#1e667f', dark='#182e3e', bright='#c1ccd0'
-/** Demonstration motion — not a machining simulator or source of safety limits. */
+/** Gentle, illustrative machining animation. No machine physics or cutting simulation. */
 function MachiningMotion({kind,running,power,children}:{kind:'table'|'head'|'spindle';running:boolean;power:number;children:ReactNode}){
  const ref=useRef<THREE.Group>(null),phase=useRef(0)
  useFrame((_,delta)=>{

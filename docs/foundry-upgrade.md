@@ -1,9 +1,19 @@
-# BoltSense Foundry Edition
+# Foundry UI and full component visibility
 
-All 107 monitoring catalog targets across eight machines have a matching 3D Part ID. The 3D workspace now displays numbered clickable part pins for every catalog item, including planned sensor targets. **See internals** renders protective covers translucent and removes their pointer interception so internal mechanisms can be selected.
+The BoltSense prototype is visual-only and shows **simulated telemetry**. 3D equipment is procedural reference geometry; do not use it to derive maintenance or process-safety limits.
 
-The landing page now has an animated CNC milling machine which starts moving when users scroll into the production-bay section and stops when they scroll away. OS reduced-motion preferences are respected. Motions and measurements are illustrative, not real machining physics.
+## Digital twin
 
-Colors are charcoal-black, molten orange, warm warning accents, animated furnace flames and embers. Readings retain labels distinguishing demo simulation from live hardware measurements.
+- All 107 monitoring targets from `client/src/data/monitoringCatalog.ts` map to named `<Part id="...">` groups in the corresponding machine models.
+- **All pins** enables numbered, clickable 3D markers for every part, including items without a hardware sensor mapping. On small screens the pins show numbers, and the selected pin expands to display its name. The component hierarchy is keyboard-accessible.
+- **See internals** makes covers/casings translucent and removes their pointer occlusion, exposing bearings and other parts that would otherwise be hidden.
+- Mapped sensor targets and proposed targets remain distinct. Planned measurements are never presented as live sensor readings.
+- Run `npm run check:models` to verify catalog-to-3D IDs.
 
-Run `npm run check:models` locally to validate 3D component coverage. The geometries are demonstration reference models, not manufacturer engineering CAD or safety-control simulations.
+## Scroll-activated CNC preview
+
+The landing page's production bay starts with its CNC mill stationary. Scrolling into the section activates an illustrative moving X axis, spindle rotation and vertical head motion; it stops when the section leaves the viewport. This is an animation, not a manufacturing or physics simulation. Reduced-motion OS preferences disable the movement.
+
+## Theme
+
+An industrial charcoal/black palette, metal tones, warm status accents, glowing furnace-orange highlights, and decorative flame/ember animations. Decorative effects do not modify health measurements or component risk status.
