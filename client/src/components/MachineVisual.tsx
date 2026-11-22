@@ -1,0 +1,3 @@
+import { Cog, Factory, Gauge, GitBranch, Hammer, MoveHorizontal, Orbit, RotateCcw } from 'lucide-react'
+const icons={cnc:Factory,lathe:Cog,conveyor:MoveHorizontal,press:Hammer,robot:Orbit,pump:RotateCcw,compressor:Gauge,motor:GitBranch}
+export function MachineVisual({type}:{type:string}){const Icon=icons[type as keyof typeof icons]||Factory;return <div className={`machine-visual art-${type}`}><div className="machine-halo"/><div className="machine-outline"><Icon size={68} strokeWidth={1.1}/></div><div className="machine-floor"/><div className="machine-visual-tag">{type.toUpperCase()} / DIGITAL SYSTEM</div></div>}
