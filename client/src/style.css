@@ -58,89 +58,116 @@
 @media(max-width:560px){.catalog-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.catalog-summary>div{padding:12px}.catalog-summary strong{font-size:24px}.catalog-controls>.catalog-search{min-width:100%}}
 
 
-/* BOLTSENSE REAL FACTORY: natural steel, charcoal and photographed machining sparks. */
-:root{color-scheme:dark;background:#090b0d;color:#f3f3f0;--steel:#202528;--steel-border:#353e40;--warm:#d8aa7e}
-body{background:#090b0d;color:#f3f3f0}::selection{background:#b8865480}:focus-visible{outline:2px solid #e8b77f;outline-offset:3px}
-.shell{background:#090b0d}.shell:before{background-image:linear-gradient(#cad2d90a 1px,transparent 1px),linear-gradient(90deg,#cad2d90a 1px,transparent 1px);opacity:.35;background-size:72px 72px}
-.cursor-glow{background:radial-gradient(circle,#aa87521a,#b1804708 40%,transparent 69%);mix-blend-mode:normal}
-.sidebar,.topbar{background:#101416;border-color:#323b40}.app-footer{background:#0f1214;border-color:#31383c;color:#90999c}
-.brand-mark,.brand-accent{color:#dcb18b}.brand small,.sidebar-section,.breadcrumb,.micro{color:#a0a8aa}
-.nav-item{color:#abb3b6}.nav-item:hover{background:#252b2f;color:#fff}.nav-item.active{color:#f2cca6;background:#302b25;box-shadow:inset 3px 0 #dcad80}
-.node-card,.panel{background:linear-gradient(145deg,#1c2124,#15191b);border-color:#343c40;box-shadow:0 8px 30px #0004}
-.node-title,.model-badge,.eyebrow,.hero-kicker,.text-link,.teal-text{color:#d7b089}
-.node-grid strong,.sidebar-footer,.breadcrumb-current{color:#dfe3e4}
-.tiny-dot{background:#dfa66e!important;box-shadow:0 0 0 3px #e8ae7822}
-.connection-badge,.pill{background:#302d27;color:#e2caab;border-color:#554e42}.connection-badge.offline{color:#f0aba7;background:#312322;border-color:#674844}
-.page-heading h1,.section-heading h1,.section-heading h2,.panel-heading h3{color:#f4f5f1}.page-heading p,.section-heading p{color:#b4bdc0}
-.btn-primary{background:#dcb18b;color:#121618;box-shadow:none;border-color:#dcb18b}.btn-primary:hover{background:#eec5a0}
-.btn-outline{background:#242b2e;border-color:#586064;color:#f6f5f0}.btn-outline:hover{background:#333b3e;border-color:#cba37d}
-.btn-ghost{color:#e9c9a7}.btn-ghost:hover{background:#303335}
-.kpi-card{background:#1b2124;border-color:#394247}.kpi-icon{background:#302f2b;border-color:#665644!important;color:#e4bf94!important}.kpi-number{color:#f6f5f0}.kpi-foot,.kpi-name{color:#b1b9bc}
-/* Documentary hero: actual, license-cleared factory photo. No flames, illustrated icons or rings. */
-.hero{min-height:454px;grid-template-columns:minmax(0,1fr) minmax(330px,.94fr);border:1px solid #495258;background:#161a1c;box-shadow:0 24px 60px #0007;border-radius:13px}
-.hero:before{display:none}.hero-copy{z-index:3;padding:clamp(34px,4.4vw,68px);background:linear-gradient(90deg,#161a1c 78%,#161a1ccf)}
-.hero h1{font-size:clamp(50px,5.5vw,86px);color:#f9faf7}.accent{color:#d4ab81}
-.text-gradient{background:linear-gradient(105deg,#f7f7f5,#d6ac82 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-copy>p{color:#bbc4c6;line-height:1.8}.hero-kicker{color:#d8c0a2}.hero-trust{color:#c9c8c2}.hero-trust svg{color:#d8b38f}
-.hero-photo-art{display:block;position:relative;min-height:428px;background:#1b2123;overflow:hidden}.hero-photo-art:before,.hero-photo-art:after{content:none!important;animation:none!important}
-.hero-sparks-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.82) brightness(.87) contrast(1.12)}
-.hero-photo-vignette{position:absolute;inset:0;background:linear-gradient(90deg,#161a1ccf,transparent 42%),linear-gradient(0deg,#0f1215bb,transparent 49%)}
-.hero-machine-inset{position:absolute;bottom:62px;right:24px;width:min(40%,220px);aspect-ratio:1.4;border:1px solid #8e97908f;box-shadow:0 10px 30px #000a;overflow:hidden;background:#16191b}
+/* BOLTSENSE REAL FACTORY — photographic, documentary industrial design.
+   Deliberately no illustrated flames, glowing particles, or decorative machinery animations. */
+:root{color-scheme:dark;color:#f5f3ef;background:#090b0d;--steel:#202528;--steel-border:#30373c;--warm:#d8a16d;--warm-strong:#ecb479;--subtle:#aeb5b7}
+body{background:#090b0d;color:#f5f3ef}
+::selection{background:#b7753980}
+:focus-visible{outline:2px solid #eab47a;outline-offset:3px}
+.shell{background:#090b0d}
+.shell:before{background-image:linear-gradient(#cad2d90a 1px,transparent 1px),linear-gradient(90deg,#cad2d90a 1px,transparent 1px);opacity:.32;background-size:72px 72px}
+.cursor-glow{background:radial-gradient(circle,#be8a5223,#be8a520b 35%,transparent 69%);mix-blend-mode:normal}
+.sidebar{background:#101315;border-right:1px solid #343b3f}
+.topbar{background:#101315ed;border-bottom-color:#32383a}
+.app-footer{background:#0e1012;border-color:#303538;color:#90999c}
+.brand-mark,.brand-accent{color:#ddb084}.brand small{color:#8e979b}
+.brand-mark svg{filter:none}
+.sidebar-section,.breadcrumb,.micro{color:#939a9c}
+.nav-item{color:#a5abad}.nav-item:hover{background:#23282a;color:#fff}
+.nav-item.active{color:#f0c090;background:#27241e;box-shadow:inset 3px 0 #e0a36b}
+.node-card{background:#1b1e20;border:1px solid #363c3f}
+.panel{background:linear-gradient(155deg,#1c2022,#141718 83%);border:1px solid #333b3f;box-shadow:0 8px 32px #0003}
+.node-title,.model-badge,.eyebrow,.hero-kicker,.text-link,.teal-text{color:#d8ac84}
+.node-grid strong,.sidebar-footer,.breadcrumb-current{color:#e0e3e3}
+.tiny-dot{background:#e4ad75!important;box-shadow:0 0 0 3px #e0a0601f;flex:none}
+.connection-badge,.pill{background:#242823;color:#d2bd9c;border-color:#55513f}
+.connection-badge.offline{color:#f2a6a6;background:#302020;border-color:#684040}
+.page-heading h1,.section-heading h1,.section-heading h2,.panel-heading h3{color:#f2f2ee}
+.page-heading p,.section-heading p{color:#aeb4b8}
+.btn-primary{background:#e0ae7e;color:#171410;box-shadow:none;border-color:#e0ae7e}.btn-primary:hover{background:#f2c597;border-color:#f2c597}
+.btn-outline{background:#202528;border-color:#555e5f;color:#f3f2ea}.btn-outline:hover{background:#333a3d;border-color:#d3a377}
+.btn-ghost{background:transparent;color:#e8c4a1}.btn-ghost:hover{background:#292928}
+.kpi-card{background:linear-gradient(150deg,#1c2124,#131719);border:1px solid #343d40}
+.kpi-card:after{border-color:#b89b6930}.kpi-icon{background:#30302c;border-color:#5c5342!important;color:#e9bd90!important}
+.kpi-number{color:#f3f4f2}.kpi-foot,.kpi-name{color:#aab4b7}
+/* Full photo hero uses a rights-cleared, non-watermarked industrial image. */
+.hero{min-height:450px;grid-template-columns:minmax(0,1fr) minmax(350px,.92fr);border:1px solid #41494a;background:#141819;box-shadow:0 20px 60px #0005;border-radius:14px}
+.hero:before{display:none}
+.hero-copy{padding:clamp(36px,4.3vw,65px);z-index:3;background:linear-gradient(90deg,#141819 70%,#141819e8 90%,transparent 100%)}
+.hero h1{color:#f5f5f1;font-size:clamp(51px,5.6vw,86px);font-weight:700}
+.accent{color:#c7a078}.text-gradient{background:linear-gradient(105deg,#f5f5f2,#d6a375 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy>p{color:#b8c1c2;font-size:13px;line-height:1.8}.hero-kicker{color:#c9b097;letter-spacing:.17em}
+.hero-trust{color:#c6c4be}.hero-trust svg{color:#d4ae87}
+.hero-photo-art{position:relative;display:block;min-height:420px;overflow:hidden;background:#1e2122}
+.hero-photo-art:before,.hero-photo-art:after{content:none!important;animation:none!important}
+.hero-sparks-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:45% 50%;filter:saturate(.82) contrast(1.13) brightness(.83)}
+.hero-photo-vignette{position:absolute;inset:0;background:linear-gradient(90deg,#141819a3 0%,transparent 39%),linear-gradient(0deg,#0f1116c9,transparent 47%),linear-gradient(180deg,#11151845,transparent 30%)}
+.hero-machine-inset{position:absolute;bottom:65px;right:27px;width:min(40%,218px);aspect-ratio:1.42;overflow:hidden;background:#101213;border:1px solid #7b868285;box-shadow:0 14px 25px #0007}
 .hero-machine-inset img{width:100%;height:100%;object-fit:cover;filter:saturate(.7)}
-.hero-machine-inset span{position:absolute;inset:auto 0 0;padding:8px;background:#11171ada;color:#f1e3d1;font-size:8px;letter-spacing:.12em;font-weight:800}
-.hero-photo-caption{position:absolute;bottom:20px;left:24px;color:#f2f2ee;font-size:9px;font-weight:800;letter-spacing:.14em;display:flex;align-items:center;gap:9px}
-.hero-photo-caption small{font-size:9px;color:#ccc7bd;letter-spacing:0;font-weight:400}
-.hero-photo-dot{width:8px;height:8px;background:#e5ab6c;border-radius:50%}
-/* Photo-only machine fleet cards. */
-.machine-card{background:#1b2124;border:1px solid #394348}.machine-card:hover{border-color:#c39d76;box-shadow:0 17px 36px #000a}
-.machine-card-visual{height:182px;min-height:182px;position:relative;background:#0f1518;overflow:hidden}
-.machine-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.75) brightness(.8);transition:transform .5s ease,filter .35s ease}
-.machine-card:hover .machine-photo{transform:scale(1.035);filter:saturate(.86) brightness(.95)}
-.machine-photo-shade{position:absolute;inset:0;background:linear-gradient(0deg,#070c0fd5,transparent 69%);pointer-events:none}
-.machine-photo-tag{position:absolute;left:13px;bottom:13px;padding:6px 8px;background:#141b20be;border:1px solid #838a807d;color:#f7e7d0;font-size:8px;font-weight:800;letter-spacing:.09em}
-.machine-card-body h3{color:#f5f5f2}.machine-card-body p,.machine-card-foot{color:#b3bbbd}
-/* The scroll section plays real footage. Its sparks are filmed, never illustrated. */
-.factory-film{position:relative;margin:42px 0 47px}
+.hero-machine-inset span{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:#0d1012db;color:#e3d9ca;font-size:8px;letter-spacing:.1em;font-weight:800}
+.hero-photo-caption{position:absolute;left:30px;bottom:22px;color:#f1ede9;font-size:9px;font-weight:800;letter-spacing:.16em;display:flex;align-items:center;gap:10px}
+.hero-photo-caption small{color:#c9c0b5;letter-spacing:0;text-transform:none;font-weight:400}
+.hero-photo-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ecaa5f}
+/* Real asset photos instead of flat stylized icon art. */
+.machine-card{border:1px solid #3d4549;background:#191e20;box-shadow:none}
+.machine-card:hover{border-color:#a38161;box-shadow:0 16px 38px #0009}
+.machine-card-visual{background:#101517;isolation:isolate;overflow:hidden}
+.machine-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.22) saturate(.76) brightness(.73);transition:transform .55s ease,filter .35s ease}
+.machine-card:hover .machine-photo{filter:grayscale(0) saturate(.84) brightness(.9);transform:scale(1.035)}
+.machine-photo-shade{position:absolute;inset:0;background:linear-gradient(0deg,#080d10d9 0%,transparent 65%);pointer-events:none}
+.machine-photo-tag{position:absolute;bottom:12px;left:14px;font-size:8px;font-weight:800;letter-spacing:.11em;color:#f7e2c8;background:#1b2023b8;border:1px solid #7d827488;padding:6px 8px;max-width:80%}
+.machine-card-body h3{color:#f3f2ef}.machine-card-body p,.machine-card-foot{color:#acb3b5}
+/* A documentary film view: all motion is physical footage, never illustrated fire or 3D animation. */
+.factory-film{margin:40px 0 46px;position:relative}
 .factory-film-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px}
-.factory-film-head .eyebrow{display:flex;align-items:center;gap:9px}.factory-film-head h2{font-size:clamp(30px,4vw,53px);line-height:1.07;margin:11px 0 8px;color:#f6f5f2}
-.factory-film-head p{margin:0;line-height:1.7;color:#afb9bc;font-size:12px;max-width:650px}
-.factory-film-note{display:flex;gap:10px;align-items:center;border-left:2px solid #cba780;padding:8px 12px;color:#c6c2b9;font-size:9px;letter-spacing:.1em}.factory-film-note strong{font-size:10px;color:#f2d7b8}
-.factory-film-stage{position:relative;height:clamp(368px,51vw,620px);border:1px solid #454e52;border-radius:13px;overflow:hidden;background:#1c2124;box-shadow:0 16px 42px #0008}
-.factory-film-background,.factory-film-video,.factory-film-wash{position:absolute;inset:0;width:100%;height:100%}
-.factory-film-background{background-size:cover;background-position:center}.factory-film-video{z-index:1;object-fit:cover;object-position:center;filter:saturate(.79) contrast(1.06)}
-.factory-film-wash{z-index:2;pointer-events:none;background:linear-gradient(90deg,#070b0ddc 0%,#070b0da3 32%,transparent 75%),linear-gradient(0deg,#070b0dba,transparent 55%),linear-gradient(180deg,#090d0f5f,transparent 31%)}
-.factory-film-content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(19px,4vw,45px);pointer-events:none}
-.factory-film-index{display:flex;align-items:center;gap:10px;color:#f5f4ee;font-size:10px;letter-spacing:.14em;font-weight:700}
-.factory-film-index>span:last-child{margin-left:auto;color:#cfcbc2}.factory-film-live{width:8px;height:8px;background:#e4b580;border-radius:50%;box-shadow:0 0 0 4px #e4b58025}
-.factory-film-copy>span{display:inline-block;font-size:9px;color:#dfc4a7;letter-spacing:.18em;font-weight:800;margin-bottom:10px}
-.factory-film-copy h3{font-size:clamp(39px,6.2vw,79px);line-height:.99;margin:0 0 15px;color:white}
-.factory-film-copy p{font-size:13px;line-height:1.7;color:#e3e5e4;max-width:375px}
-.factory-film-foot{display:flex;gap:12px;justify-content:space-between;align-items:center}
-.film-status{display:flex;align-items:center;gap:8px;background:#0f1418b7;border:1px solid #7d84837a;padding:10px 13px;font-size:10px;letter-spacing:.08em;color:#f1e7d8}
-.film-control{pointer-events:auto;border:1px solid #818b89;border-radius:6px;background:#13191ddc;color:#f8f7f3;display:flex;align-items:center;gap:7px;padding:10px 14px;font-size:11px;font-weight:700}
-.film-control:hover{background:#303739}.film-control:disabled{opacity:.45;cursor:not-allowed}
-.factory-film-caption{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 3px;color:#a3acad;font-size:10px;letter-spacing:.08em}
-.factory-film-caption span{display:flex;gap:8px;align-items:center}.factory-film-caption a{color:#d4ae85;letter-spacing:0;text-decoration:underline;text-underline-offset:3px}
-/* Realistic steel instead of molten orange in the clickable (still procedural) digital twins. */
-.twin-container{border-color:#424a4e}.twin-viewport{background:radial-gradient(ellipse at 45% 38%,#31393e,#15191b 76%)}
-.twin-toolbar{background:#171c1f;border-color:#40494e}.twin-toolbar button,.parts-filters button{background:#242c30;color:#d4dcdd;border-color:#4b5558}
-.twin-toolbar button:hover,.parts-filters button:hover{border-color:#c8a47d;color:#fff}.twin-toolbar button.tool-on,.parts-filters button.active{background:#453a2e;color:#f5dfc2;border-color:#bb966c}
-.twin-watermark,.twin-orientation{color:#b1bdc1}.twin-watermark span{color:#919c9e}.parts-search,.catalog-controls select,.catalog-controls>.catalog-search{background:#242b2e;border-color:#4f585b;color:#f6f6f2}
-.part-entry:hover{background:#2c3235}.part-active{background:#40372e!important;border-color:#b79570!important}
-.inspection-coverage,.catalog-disclaimer{background:#292b29;border-color:#4a4840}
-.inspection-coverage strong,.catalog-disclaimer strong{color:#f0dabc}.inspection-coverage p,.catalog-disclaimer p{color:#c6c3b9}
-.risk-box,.metric-tile{background:#252b2e;border-color:#434c50}.catalog-table th{background:#2b3134;color:#e7ccaa;border-color:#455056}.catalog-table td{color:#cdd6d8;border-color:#404a4e}
-.catalog-pill{background:#323333;color:#ead8c0}.catalog-state.planned{background:#34322b;color:#e9d0ae}
-.twin-label.component-pin{display:flex!important;align-items:center;gap:5px;background:#222a2dec!important;border:1px solid #b8a68c!important;border-radius:9px!important;color:#f9f6ef!important;padding:4px 6px!important;box-shadow:0 3px 13px #0009!important;max-width:165px}
-.twin-label.component-pin:hover,.twin-label.component-pin.selected{background:#5b4633ee!important;border-color:#dfc3a4!important;z-index:100}
-.twin-label-number{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:5px;padding:0 4px;background:#dfb080;color:#191c1d;font-size:10px;font-weight:900}
-.twin-label-name{font-size:9px;font-weight:700;overflow:hidden;text-overflow:ellipsis;max-width:115px}.twin-label.component-pin small{font-size:7px;color:#e6ccac}.twin-label.component-pin.planned{border-style:dashed!important}
-.twin-photo-reference{display:flex;align-items:center;gap:12px;background:#1b2022;border:1px solid #465055;border-radius:7px;margin:0 0 10px;padding:10px 13px}
-.twin-photo-reference img{width:95px;height:64px;object-fit:cover;flex:none;border-radius:4px}
-.twin-photo-reference strong{color:#f5f0e8;display:block;font-size:11px;letter-spacing:.06em}
-.twin-photo-reference span{color:#adb7ba;display:block;font-size:10px;line-height:1.55;margin-top:4px}
-@media(max-width:980px){.hero{grid-template-columns:1fr}.hero-copy{background:#151a1e}.hero-photo-art{min-height:340px}.factory-film-note{display:none}}
-@media(max-width:600px){.hero{min-height:0}.hero-copy{padding:31px 23px}.hero-photo-art{min-height:300px}.hero-machine-inset{width:38%;bottom:52px}.hero-photo-caption{left:14px;bottom:14px;font-size:8px}.hero-photo-caption small{display:none}
-.machine-card-visual{height:170px;min-height:170px}.factory-film-stage{height:440px}.factory-film-content{padding:17px}.factory-film-head h2{font-size:30px}.factory-film-index{font-size:8px}.factory-film-index>span:last-child{display:none}.factory-film-copy h3{font-size:44px}.factory-film-caption{font-size:9px;flex-wrap:wrap}
-.twin-label.component-pin{padding:3px!important}.twin-label-number{height:17px;min-width:17px;font-size:8px}.twin-label-name{display:none}.twin-label.component-pin.selected .twin-label-name{display:inline;max-width:90px}}
+.factory-film-head .eyebrow{display:flex;align-items:center;gap:9px;letter-spacing:.16em}
+.factory-film-head h2{font-size:clamp(32px,4vw,54px);line-height:1.07;letter-spacing:-.04em;margin:11px 0 8px;color:#f6f5f1}
+.factory-film-head p{margin:0;line-height:1.7;color:#afb8ba;font-size:12px;max-width:610px}
+.factory-film-note{display:flex;align-items:center;gap:9px;border-left:2px solid #b7936f;padding:8px 12px;color:#bab8ad;font-size:9px;letter-spacing:.12em;white-space:nowrap}
+.factory-film-note strong{color:#f0d5b6;font-size:10px}
+.factory-film-stage{position:relative;height:clamp(365px,50vw,630px);overflow:hidden;border:1px solid #3d4548;background:#161b1f;border-radius:13px;box-shadow:0 15px 50px #0007}
+.factory-film-background,.factory-film-video,.factory-film-wash{position:absolute;inset:0;height:100%;width:100%}
+.factory-film-background{background-size:cover;background-position:center;background-color:#262b2c}
+.factory-film-video{object-fit:cover;object-position:center;filter:contrast(1.1) saturate(.8);z-index:1}
+.factory-film-wash{z-index:2;background:linear-gradient(90deg,#05080bd9 0%,#05080ba1 30%,transparent 75%),linear-gradient(0deg,#05080ba8 0%,transparent 52%),linear-gradient(180deg,#05080b55 0%,transparent 29%);pointer-events:none}
+.factory-film-content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;padding:clamp(20px,4vw,43px)}
+.factory-film-index{display:flex;gap:10px;align-items:center;color:#e9e9e4;font-size:10px;font-weight:750;letter-spacing:.16em}
+.factory-film-index>span:last-child{margin-left:auto;color:#bebeb7}
+.factory-film-live{height:8px;width:8px;background:#d7a475;border-radius:50%;box-shadow:0 0 0 4px #d7a47522}
+.factory-film-copy>span{display:inline-block;color:#d0bda8;letter-spacing:.2em;font-size:10px;margin-bottom:9px;font-weight:700}
+.factory-film-copy h3{font-size:clamp(37px,6.4vw,83px);line-height:1;margin:0 0 16px;color:#fff}
+.factory-film-copy p{max-width:380px;color:#e4e2dd;font-size:13px;line-height:1.7}
+.factory-film-foot{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.film-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#0e1216ad;border:1px solid #787d777a;font-size:10px;letter-spacing:.1em;color:#f0e1cc}
+.film-control{pointer-events:auto;display:flex;align-items:center;gap:8px;border:1px solid #89918d;background:#12171bc9;color:#f9f6f1;padding:10px 15px;border-radius:7px;font-size:11px;font-weight:700}
+.film-control:hover{background:#2b3033}.film-control:disabled{opacity:.5;cursor:not-allowed}
+.factory-film-caption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 3px;color:#929da0;font-size:10px;letter-spacing:.08em}
+.factory-film-caption span{display:flex;align-items:center;gap:9px}.factory-film-caption a{color:#d1ab86;text-decoration:underline;text-underline-offset:3px;letter-spacing:0}
+/* Restyle engineering viewer to brushed metal, not orange hologram. */
+.twin-container{border-color:#434a4d}.twin-viewport{background:radial-gradient(ellipse at 45% 40%,#303639,#111516 75%)}
+.twin-toolbar{background:#161a1c;border-color:#3d4548}.twin-toolbar button,.parts-filters button{background:#252a2c;border-color:#424b4e;color:#d0d4d5}
+.twin-toolbar button:hover,.parts-filters button:hover{border-color:#bb986f;color:#fff}.twin-toolbar button.tool-on,.parts-filters button.active{border-color:#be9a73;background:#433529;color:#f4d9b6}
+.twin-watermark,.twin-orientation{color:#b1babc}.twin-watermark span{color:#8d999c}
+.parts-search,.catalog-controls select,.catalog-controls>.catalog-search{background:#232729;border-color:#4b5458;color:#eef0ef}
+.parts-search:focus{border-color:#caa077;box-shadow:0 0 0 2px #bb996b22}
+.part-entry:hover{background:#282d2f}.part-active{background:#39312a!important;border-color:#ae8768!important}
+.inspection-coverage,.catalog-disclaimer{background:#282623;border-color:#514637}
+.inspection-coverage strong,.catalog-disclaimer strong{color:#e9d1b8}.inspection-coverage p,.catalog-disclaimer p{color:#c6bbac}
+.risk-box,.metric-tile{background:#24282a;border-color:#3d4649}
+.catalog-table th{background:#2c3031;border-color:#4a5356;color:#e3c9a7}.catalog-table td{border-color:#3e4648;color:#d3d7d7}
+.catalog-pill{background:#31302c;color:#e9d3b4}.catalog-state.planned{background:#302c26;color:#dfc9aa}
+.twin-label.component-pin{display:flex!important;align-items:center;gap:5px;background:#202526ed!important;border:1px solid #ac9a83!important;padding:4px 6px!important;color:#f2efeb!important;border-radius:9px!important;box-shadow:0 3px 14px #0009!important;max-width:160px}
+.twin-label.component-pin:hover,.twin-label.component-pin.selected{background:#594431ed!important;border-color:#e3c6a6!important;z-index:100}
+.twin-label-number{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 4px;flex:none;border-radius:5px;background:#d9a879;color:#17191a;font-size:10px;font-weight:900}
+.twin-label-name{font-size:9px;font-weight:700;overflow:hidden;text-overflow:ellipsis;max-width:115px}
+.twin-label.component-pin small{font-size:7px;color:#e9caab}.twin-label.component-pin.planned{border-style:dashed!important}
+/* Adjacent reference photography is explicitly distinct from the interactive procedural mesh. */
+.twin-photo-reference{display:flex;align-items:center;gap:12px;margin:0 0 9px;background:#191e20;border:1px solid #41494c;padding:10px 13px;border-radius:7px}
+.twin-photo-reference img{height:63px;width:96px;flex:none;object-fit:cover;border-radius:3px;filter:saturate(.76)}
+.twin-photo-reference strong{display:block;font-size:11px;color:#f0ede7;letter-spacing:.06em}.twin-photo-reference span{display:block;color:#9ea9ab;font-size:10px;line-height:1.5;margin-top:3px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero-copy{background:#141819}.hero-photo-art{min-height:340px}.factory-film-note{display:none}}
+@media(max-width:600px){.hero{min-height:0}.hero-copy{padding:30px 25px}.hero-photo-art{min-height:300px}.hero-machine-inset{width:37%;bottom:50px}.hero-photo-caption{left:16px;bottom:14px;font-size:7px}.hero-photo-caption small{display:none}.factory-film{margin:27px 0}.factory-film-stage{height:440px}.factory-film-content{padding:17px}.factory-film-head h2{font-size:30px}.factory-film-copy h3{font-size:43px}.factory-film-index{font-size:8px}.factory-film-index>span:last-child{display:none}.factory-film-caption{flex-wrap:wrap;font-size:9px}.film-control{font-size:10px}.twin-label.component-pin{padding:3px!important}.twin-label-number{min-width:17px;height:17px;font-size:8px}.twin-label-name{display:none}.twin-label.component-pin.selected .twin-label-name{display:inline;max-width:90px}}
 @media(prefers-reduced-motion:reduce){.machine-photo{transition:none}.machine-card:hover .machine-photo{transform:none}.factory-film-video{display:none}}
+/* Preserve media height even without the removed icon illustration component. */
+.machine-card-visual{height:182px;min-height:182px}
+@media(max-width:600px){.machine-card-visual{height:170px;min-height:170px}}

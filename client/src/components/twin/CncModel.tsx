@@ -1,6 +1,7 @@
 import { Part, Box, Cylinder, Torus, Pipe, CoolingFins, Bolt, LightStack } from './TwinParts'
+
 const shell='#b4b9bd', steel='#78868e', navy='#30353c', blue='#48565e', dark='#292e33', bright='#d2d6d9'
-/** Static clickable reference geometry: motion is shown using real video footage. */
+/** Static interactive reference model. Real working-machine motion is shown as film footage. */
 export function CncModel(){
  return <group position={[0,-.1,0]}>
   <Part id="cnc-bed-01" labelOffset={-.15}>

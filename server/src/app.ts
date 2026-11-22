@@ -14,8 +14,12 @@ const postMaintenance=z.object({machineId:idSchema,componentId:idSchema,title:z.
 const postAck=z.object({notes:z.string().max(2000).optional(),assignee:z.string().max(100).optional()}).strict()
 export const app=express()
 app.disable('x-powered-by');
-// Permit only the specific external photography and film CDN domains.
-app.use(helmet({contentSecurityPolicy:{directives:{imgSrc:["'self'",'data:','https://images.pexels.com'],mediaSrc:["'self'",'https://videos.pexels.com']}}}));
+// Allow precisely the external, licensed Pexels assets used for factory photography and film.
+// All other Helmet defaults, including script and frame protections, remain enabled.
+app.use(helmet({contentSecurityPolicy:{directives:{
+ imgSrc:["'self'",'data:','https://images.pexels.com'],
+ mediaSrc:["'self'",'https://videos.pexels.com'],
+}}}));
 app.use(cors({origin:(process.env.CORS_ORIGIN||'http://localhost:5173').split(',')}));app.use(express.json({limit:'32kb'}));app.use('/api',rateLimit({windowMs:60_000,limit:240,standardHeaders:'draft-7',legacyHeaders:false}));
 const isDemo=()=>process.env.DATA_MODE!=='live'
 const unavailable=(res:express.Response)=>res.status(503).json({error:'Live database is not configured; set DATA_MODE=live and DATABASE_URL, then run migrations.',source:'live'})
@@ -32,7 +36,8 @@ app.get('/api/alerts',async(_req,res)=>{try{if(isDemo())return res.json(demoAler
 app.post('/api/alerts/:id/acknowledge',requireRole(['admin','technician']),async(req,res)=>{try{const parsed=postAck.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:parsed.error.flatten()});if(!idSchema.safeParse(req.params.id).success)return res.status(400).json({error:'Invalid alert ID'});if(isDemo())return res.status(409).json({error:'Demo alerts can only be acknowledged in the demo UI'});const db=database();if(!db)return unavailable(res);const row=await db.alert.findUnique({where:{id:req.params.id}});if(!row)return res.status(404).json({error:'Alert not found'});res.json(await db.alert.update({where:{id:req.params.id},data:{acknowledged:true,assignee:parsed.data.assignee,notes:parsed.data.notes}}))}catch{res.status(500).json({error:'Could not acknowledge alert'})}})
 app.get('/api/maintenance',async(_req,res)=>{try{if(isDemo())return res.json(demoMaintenance.map(m=>({...m,source:'SIMULATED DEMO'})));const db=database();if(!db)return unavailable(res);res.json(await db.maintenanceRecord.findMany({orderBy:{scheduledAt:'asc'}}))}catch{res.status(500).json({error:'Could not load maintenance'})}})
 app.post('/api/maintenance',requireRole(['admin','technician']),async(req,res)=>{try{const parsed=postMaintenance.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:parsed.error.flatten()});if(isDemo())return res.status(409).json({error:'Demo writes are disabled'});const db=database();if(!db)return unavailable(res);const target=await db.component.findUnique({where:{id:parsed.data.componentId}});if(!target||target.machineId!==parsed.data.machineId)return res.status(400).json({error:'Invalid machine/component mapping'});const record=await db.maintenanceRecord.create({data:{...parsed.data,scheduledAt:new Date(parsed.data.scheduledAt),status:'scheduled'}});res.status(201).json(record)}catch{res.status(500).json({error:'Could not create work order'})}})
-// Serve the built Vite SPA from the same Render service as the API.
+// In production the Express API and built Vite SPA share one Render web service.
+// The compiled file lives at server/dist/app.js; resolve the client build relative to it.
 if (process.env.NODE_ENV === 'production') {
   const clientDist = fileURLToPath(new URL('../../client/dist/', import.meta.url))
   app.use(express.static(clientDist))

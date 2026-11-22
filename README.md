@@ -15,9 +15,10 @@
 - Transparent risk rules with configurable sensor-specific thresholds; unit tests and API integration tests.
 - No trained predictive AI, no fabricated physical readings, no guaranteed failure dates.
 
-## Real factory photography and filmed machining
 
-The home page now displays licensed industrial photography and a real CNC machining video, automatically playing muted when the section enters view. Machine cards use real equipment photographs and no synthetic flames. The interactive digital twins remain reference geometry, not manufacturer CAD. All demo telemetry is still simulated. See [docs/real-factory-visuals.md](docs/real-factory-visuals.md) for sources and media fallback behavior.
+## Real factory imagery and scroll footage (2026-11-22)
+
+The home page uses non-watermarked, licensed factory photography and a real CNC machining video that plays muted when scrolled into view, replacing the previous animated 3D machine and drawn flames. Machine selection cards show representative real equipment photographs. The interactive 3D workspace still uses labeled procedural inspection meshes and retains component-to-sensor mappings. Footage is not a live BoltSense machine feed, and all demo sensor readings remain simulated. For source credits, third-party CDN/offline behavior, and replacement instructions, see [docs/real-factory-visuals.md](docs/real-factory-visuals.md).
 
 ## Requirements
 
