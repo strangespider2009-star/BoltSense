@@ -1,0 +1,17 @@
+# One Render service hosts the BoltSense Vite SPA and Express API.
+# Deployment starts in DEMO mode: simulated sensor data, no real MQTT or database.
+services:
+  - type: web
+    name: boltsense
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run db:generate && npm run build
+    startCommand: node server/dist/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: NODE_ENV
+        value: production
+      - key: DATA_MODE
+        value: demo
