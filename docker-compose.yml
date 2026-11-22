@@ -1,1 +1,20 @@
-# BoltSense configuration scaffold
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: boltsense
+      POSTGRES_PASSWORD: boltsense_dev_only
+      POSTGRES_DB: boltsense
+    ports: ["5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U boltsense"]
+      interval: 5s
+      retries: 10
+  mosquitto:
+    image: eclipse-mosquitto:2
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    ports: ["1883:1883"]
+volumes:
+  postgres_data:
