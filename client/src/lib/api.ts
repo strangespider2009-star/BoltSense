@@ -1,6 +1,7 @@
 import { machines,components,sensors,alerts,maintenance,sampleHistory } from '../data/demo'
 import type { Mode } from '../types'
-const API=import.meta.env.VITE_API_URL||'http://localhost:4000'
+// Use the deployed site's origin in production; localhost only during local development.
+const API=import.meta.env.VITE_API_URL||(import.meta.env.PROD?window.location.origin:'http://localhost:4000')
 export async function getData<T>(endpoint:string, mode:Mode):Promise<T> {
  if(mode==='demo'){
   const path=endpoint.split('?')[0]
