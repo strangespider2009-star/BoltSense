@@ -6,14 +6,26 @@ import { MachineCard } from '../components/MachineCard'
 import { TrendChart } from '../components/Charts'
 import { Button } from '../components/ui/button'
 import { ScrollForge } from '../components/ScrollForge'
-import { factorySparksImage, industrialMedia } from '../data/industrialMedia'
+import { factorySparksImage, factoryCncVideo, industrialMedia } from '../data/industrialMedia'
 export function Home(){
  const health=Math.round(machines.reduce((s,m)=>s+m.healthScore,0)/machines.length)
  return <div className="page"><div className="page-topline"><span className="eyebrow"><span className="tiny-dot"/> INDUSTRIAL OPERATIONS CENTER</span><span className="muted micro">REAL FACTORY VISUALS · INDUSTRIAL CONDITION INTELLIGENCE · SIMULATED READINGS</span></div>
  <motion.section className="hero" initial={{opacity:0,y:15}} animate={{opacity:1,y:0}} transition={{duration:.5}}><div className="hero-copy"><span className="hero-kicker"><Radio size={14}/> BOLTSENSE / INDUSTRIAL MONITORING</span><h1>Monitor<span className="accent">.</span><br/>Predict<span className="accent">.</span><br/><span className="text-gradient">Prevent.</span></h1><p>Turn machinery into intelligence. A connected industrial digital twin platform to visualize condition, discover anomalies, and plan maintenance before costly downtime.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/machines">Explore Machines <ArrowRight size={17}/></Link></Button><Button variant="outline" asChild size="lg"><Link to="/dashboard">View Live Dashboard <ArrowUpRight size={17}/></Link></Button></div><div className="hero-trust"><span><CheckCircle2 size={15}/> Component-level insights</span><span><CheckCircle2 size={15}/> Raspberry Pi ready</span></div></div><div className="hero-art hero-photo-art">
   <img className="hero-sparks-photo" src={factorySparksImage} alt="Real metalworking in a factory, with bright sparks from a metal grinder" fetchPriority="high" />
   <div className="hero-photo-vignette"/>
-  <div className="hero-machine-inset"><img src={industrialMedia.cnc} alt="Photograph of precision CNC machining equipment"/><span>01 / PRECISION MACHINING</span></div>
+  <div className="hero-machine-inset hero-machine-preview">
+    <img src={industrialMedia.cnc} alt="Photograph of precision CNC machining equipment"/>
+    <video src={factoryCncVideo} poster={industrialMedia.cnc} muted loop playsInline preload="none"
+      tabIndex={0} aria-label="Hover, focus or tap to play real CNC machining footage"
+      onPointerEnter={event=>{if(event.pointerType==='mouse'||event.pointerType==='pen')void event.currentTarget.play().catch(()=>{})}}
+      onPointerLeave={event=>event.currentTarget.pause()}
+      onFocus={event=>{void event.currentTarget.play().catch(()=>{})}}
+      onBlur={event=>event.currentTarget.pause()}
+      onClick={event=>{if(event.currentTarget.paused)void event.currentTarget.play().catch(()=>{});else event.currentTarget.pause()}}
+      onKeyDown={event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();if(event.currentTarget.paused)void event.currentTarget.play().catch(()=>{});else event.currentTarget.pause()}}}
+    />
+    <span>01 / PRECISION MACHINING · HOVER TO RUN</span>
+  </div>
   <div className="hero-photo-caption"><span className="hero-photo-dot"/> REAL INDUSTRIAL PHOTOGRAPHY <small>Images: Pexels</small></div>
  </div></motion.section>
  <ScrollForge/>
