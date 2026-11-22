@@ -13,7 +13,10 @@ import { idSchema } from './lib/validation.js'
 const postMaintenance=z.object({machineId:idSchema,componentId:idSchema,title:z.string().min(2).max(200),scheduledAt:z.string().datetime({offset:true}),technician:z.string().max(100).optional(),notes:z.string().max(2000).optional()}).strict()
 const postAck=z.object({notes:z.string().max(2000).optional(),assignee:z.string().max(100).optional()}).strict()
 export const app=express()
-app.disable('x-powered-by');app.use(helmet());app.use(cors({origin:(process.env.CORS_ORIGIN||'http://localhost:5173').split(',')}));app.use(express.json({limit:'32kb'}));app.use('/api',rateLimit({windowMs:60_000,limit:240,standardHeaders:'draft-7',legacyHeaders:false}));
+app.disable('x-powered-by');
+// Permit only the specific external photography and film CDN domains.
+app.use(helmet({contentSecurityPolicy:{directives:{imgSrc:["'self'",'data:','https://images.pexels.com'],mediaSrc:["'self'",'https://videos.pexels.com']}}}));
+app.use(cors({origin:(process.env.CORS_ORIGIN||'http://localhost:5173').split(',')}));app.use(express.json({limit:'32kb'}));app.use('/api',rateLimit({windowMs:60_000,limit:240,standardHeaders:'draft-7',legacyHeaders:false}));
 const isDemo=()=>process.env.DATA_MODE!=='live'
 const unavailable=(res:express.Response)=>res.status(503).json({error:'Live database is not configured; set DATA_MODE=live and DATABASE_URL, then run migrations.',source:'live'})
 app.get('/api/health',(_req,res)=>res.json({status:'ok',mode:isDemo()?'demo':'live',timestamp:new Date().toISOString()}))

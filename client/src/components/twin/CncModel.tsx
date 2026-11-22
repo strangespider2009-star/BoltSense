@@ -1,23 +1,7 @@
-import { useRef, type ReactNode } from 'react'
-import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
 import { Part, Box, Cylinder, Torus, Pipe, CoolingFins, Bolt, LightStack } from './TwinParts'
-
-const shell='#d9e1e6', steel='#7a939f', navy='#233c50', blue='#1e667f', dark='#182e3e', bright='#c1ccd0'
-/** Gentle, illustrative machining animation. No machine physics or cutting simulation. */
-function MachiningMotion({kind,running,power,children}:{kind:'table'|'head'|'spindle';running:boolean;power:number;children:ReactNode}){
- const ref=useRef<THREE.Group>(null),phase=useRef(0)
- useFrame((_,delta)=>{
-  if(!ref.current)return
-  if(running)phase.current+=Math.min(delta,.06)*(1.5+power*2.4)
-  const wave=running?Math.sin(phase.current)*power:0
-  if(kind==='table')ref.current.position.x=wave*.32
-  if(kind==='head')ref.current.position.y=wave*.13
-  if(kind==='spindle')ref.current.rotation.y=running?ref.current.rotation.y+Math.min(delta,.06)*(6+power*17):0
- })
- return <group ref={ref}>{children}</group>
-}
-export function CncModel({running=false,power=0}:{running?:boolean;power?:number}){
+const shell='#b4b9bd', steel='#78868e', navy='#30353c', blue='#48565e', dark='#292e33', bright='#d2d6d9'
+/** Static clickable reference geometry: motion is shown using real video footage. */
+export function CncModel(){
  return <group position={[0,-.1,0]}>
   <Part id="cnc-bed-01" labelOffset={-.15}>
    <Box size={[5.8,.37,3.35]} position={[0,-1.26,0]} color={navy}/><Box size={[5.65,.22,3.2]} position={[0,-1.02,0]} color="#536b7b"/>
@@ -47,7 +31,7 @@ export function CncModel({running=false,power=0}:{running?:boolean;power?:number
    {Array.from({length:15},(_,i)=><Torus key={i} major={.09} tube={.012} rotation={[Math.PI/2,0,0]} position={[0,-1.45+i*.2,.01]} color="#7896a1"/>)}
    <Box size={[.48,.24,.6]} position={[0,-1.08,.02]} color={steel}/>
   </Part>
-  <MachiningMotion kind="head" running={running} power={power}>
+  <group>
   <Part id="spindle-motor-01" position={[0,2.17,-.9]} labelOffset={.99}>
    <Box size={[1.35,1.58,1.19]} color="#647e8c"/>
    <Box size={[1.4,.22,1.23]} position={[0,.73,0]} color="#b8c6c8"/>
@@ -60,15 +44,15 @@ export function CncModel({running=false,power=0}:{running?:boolean;power?:number
    <Torus major={.34} tube={.075} rotation={[Math.PI/2,0,0]} position={[0,-.3,0]} color="#4a8da5"/>
    <Cylinder radius={.19} height={.3} position={[0,-.37,0]} color={bright}/>
   </Part>
-  <MachiningMotion kind="spindle" running={running} power={power}>
+  <group>
   <Part id="tool-holder-01" position={[0,.54,-.9]} labelOffset={.6}>
    <Cylinder radiusTop={.23} radiusBottom={.16} height={.42} color="#e4ebed"/>
    <Cylinder radiusTop={.15} radiusBottom={.09} height={.18} position={[0,-.3,0]} color="#96bbc6"/>
    <Cylinder radius={.052} height={.34} position={[0,-.54,0]} color="#c1d8e0"/>
   </Part>
-  </MachiningMotion>
-  </MachiningMotion>
-  <MachiningMotion kind="table" running={running} power={power}>
+  </group>
+  </group>
+  <group>
   <Part id="x-axis-guide-01" position={[0,-.45,.15]} labelOffset={.59}>
    <Box size={[3.55,.37,1.72]} color="#9aaeb9"/>
    <Box size={[3.6,.12,1.72]} position={[0,.23,0]} color="#b5c4c7"/>
@@ -80,7 +64,7 @@ export function CncModel({running=false,power=0}:{running?:boolean;power?:number
    {[-.42,.42].map(x=><Box key={x} size={[.22,.43,.78]} position={[x,.25,0]} color="#a5b8bb"/>)}
    <Cylinder radius={.065} height={.48} rotation={[0,0,Math.PI/2]} position={[.7,.1,0]} color="#d4dedc"/>
   </Part>
-  </MachiningMotion>
+  </group>
   <Part id="cnc-y-axis-guide-01" position={[0,-.65,-.5]} labelOffset={.15}>
    {[-1.05,1.05].map(x=><Box key={x} size={[.2,.16,1.8]} position={[x,0,0]} color="#5f8f9e"/>)}
   </Part>

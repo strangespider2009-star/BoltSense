@@ -1,58 +1,49 @@
-import { useEffect, useRef, useState, Suspense, type CSSProperties } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { ContactShadows, Grid, PerspectiveCamera } from '@react-three/drei'
-import { Activity, ArrowDown, Flame, Gauge, Wrench } from 'lucide-react'
-import { CncModel } from './twin/CncModel'
-
-function ForgeMachine({running,power}:{running:boolean;power:number}){
- return <>
-  <PerspectiveCamera makeDefault position={[8.3,5.5,11.8]} fov={39} near={.1} far={80}/>
-  <ambientLight intensity={.86}/>
-  <hemisphereLight args={['#ffc78a','#281510',1.5]}/>
-  <directionalLight position={[5,8,6]} intensity={2.4} color="#f6e2cd" castShadow shadow-mapSize={[1024,1024]}/>
-  <pointLight position={[-4,3,1]} intensity={running?15:6} distance={11} color="#ff682d"/>
-  <pointLight position={[2,2,6]} intensity={10} distance={11} color="#fcb772"/>
-  <CncModel running={running} power={power}/>
-  <Grid position={[0,-1.65,0]} infiniteGrid cellColor="#4a2c1d" sectionColor="#9b5933" sectionSize={3} fadeDistance={18}/>
-  <ContactShadows position={[0,-1.62,0]} opacity={.5} scale={13} blur={2.7}/>
- </>
-}
-
-/** The machine is idle at page load; scrolling into the production bay winds it up. */
+import { useEffect, useRef, useState } from 'react'
+import { ArrowDown, Film, Pause, Play, ShieldCheck, Wrench } from 'lucide-react'
+import { factoryCncPoster, factoryCncVideo } from '../data/industrialMedia'
+/** Actual CNC factory video, rather than a decorative animated 3D machine. */
 export function ScrollForge(){
- const ref=useRef<HTMLElement>(null)
- const [progress,setProgress]=useState(0)
+ const section=useRef<HTMLElement>(null)
+ const video=useRef<HTMLVideoElement>(null)
  const [visible,setVisible]=useState(false)
+ const [enabled,setEnabled]=useState(true)
+ const [playing,setPlaying]=useState(false)
+ const [failed,setFailed]=useState(false)
  const [reduceMotion,setReduceMotion]=useState(false)
  useEffect(()=>{
-  const media=window.matchMedia('(prefers-reduced-motion: reduce)')
-  const updateMotion=()=>setReduceMotion(media.matches)
-  updateMotion();media.addEventListener?.('change',updateMotion)
-  const update=()=>{
-   if(!ref.current)return
-   const bounds=ref.current.getBoundingClientRect()
-   const viewport=Math.max(window.innerHeight,1)
-   setVisible(bounds.bottom>0 && bounds.top<viewport)
-   const value=Math.max(0,Math.min(1,(viewport*.86-bounds.top)/(viewport*.95)))
-   setProgress(v=>Math.abs(v-value)>.005?value:v)
-  }
-  update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update)
-  return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);media.removeEventListener?.('change',updateMotion)}
+  const query=window.matchMedia('(prefers-reduced-motion: reduce)')
+  const update=()=>setReduceMotion(query.matches)
+  update();query.addEventListener('change',update)
+  return()=>query.removeEventListener('change',update)
  },[])
- const running=progress>.18&&visible&&!reduceMotion
- const power=reduceMotion?0:Math.max(0,Math.min(1,(progress-.18)/.55))
- return <section ref={ref} className="forge-scroll" aria-label="Scroll-activated CNC production demonstration">
-  <div className="forge-stick">
-   <div className="forge-stage-heading"><span className="eyebrow"><Flame size={15}/> THE PRODUCTION BAY / INTERACTIVE PREVIEW</span><h2>Built for the <span>factory floor.</span></h2><p>Scroll through this section to power up the CNC milling machine and watch the spindle and worktable move. Demonstration motion only.</p></div>
-   <div className={`forge-stage ${running?'forge-stage-running':''}`}>
-    <div className="forge-embers" aria-hidden="true">{Array.from({length:21},(_,i)=><i key={i} style={{'--ember-i':i,'--ember-delay':`${(i%7)*-.42}s`,'--ember-left':`${7+(i*41)%86}%`} as CSSProperties}/>)}</div>
-    <div className="forge-stage-lines" aria-hidden="true"/>
-    <div className="forge-canvas"><Canvas dpr={[1,1.5]} shadows gl={{alpha:true,antialias:true,powerPreference:'high-performance'}}><Suspense fallback={null}><ForgeMachine running={running} power={power}/></Suspense></Canvas></div>
-    <div className="forge-machine-status"><span className={`forge-status-led ${running?'lit':''}`}/><div><small>MACHINE STATUS · DEMONSTRATION</small><strong>{reduceMotion?'MOTION REDUCED':running?'CNC MILL / CYCLING':'CNC MILL / STANDBY'}</strong></div></div>
-    <div className="forge-sim-metrics"><span><Gauge size={14}/> SPINDLE DRIVE <strong>{running?'ANIMATED':'IDLE'}</strong></span><span><Activity size={14}/> AXIS MOTION <strong>{running?'ACTIVE':'PARKED'}</strong></span><span><Wrench size={14}/> CUTTING <strong>VISUAL DEMO</strong></span></div>
-    <div className="forge-progress"><div style={{width:`${Math.round(progress*100)}%`}}/><span>{Math.round(progress*100)}% / SCROLL TO START</span></div>
+ useEffect(()=>{
+  if(!section.current||!('IntersectionObserver' in window))return
+  const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting&&entry.intersectionRatio>=.26),{threshold:[0,.26,.5,1]})
+  observer.observe(section.current)
+  return()=>observer.disconnect()
+ },[])
+ useEffect(()=>{
+  const el=video.current
+  if(!el)return
+  if(!visible||reduceMotion||!enabled||failed){el.pause();setPlaying(false);return}
+  const pending=el.play()
+  if(pending)void pending.then(()=>setPlaying(true)).catch(()=>setPlaying(false))
+ },[visible,reduceMotion,enabled,failed])
+ return <section ref={section} className="factory-film" aria-label="Real CNC production footage activated by scrolling">
+  <div className="factory-film-head"><div><span className="eyebrow"><Film size={14}/> FACTORY FLOOR / REAL WORKING MACHINERY</span><h2>Watch precision at work.</h2><p>Scroll into the production floor to watch authentic machining footage with industrial equipment in motion.</p></div>
+  <div className="factory-film-note"><ShieldCheck size={16}/><span>FILMED MACHINERY<br/><strong>NOT LIVE TELEMETRY</strong></span></div></div>
+  <div className="factory-film-stage">
+   <div className="factory-film-background" style={{backgroundImage:'url('+factoryCncPoster+')'}}/>
+   {!failed&&<video ref={video} className="factory-film-video" src={visible?factoryCncVideo:undefined} poster={factoryCncPoster} muted loop playsInline preload="none" aria-label="Filmed CNC milling machine cutting metal" onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onError={()=>{setFailed(true);setPlaying(false)}}/>}
+   <div className="factory-film-wash"/>
+   <div className="factory-film-content">
+    <div className="factory-film-index"><span className="factory-film-live"/> SOURCE / LICENSED FACTORY FOOTAGE <span>01 — CNC MACHINING</span></div>
+    <div className="factory-film-copy"><span>THE WORK BEHIND THE DATA</span><h3>Real machines.<br/>Real production.</h3><p>Digital inspection starts with a clear view of the physical process.</p></div>
+    <div className="factory-film-foot"><span className="film-status"><Wrench size={14}/>{failed?'STILL IMAGE · FOOTAGE UNAVAILABLE':reduceMotion?'MOTION DISABLED':!visible?'SCROLL INTO VIEW':playing?'FILM PLAYING':enabled?'READY TO PLAY':'FILM PAUSED'}</span>
+     <button className="film-control" type="button" onClick={()=>setEnabled(v=>!v)} disabled={failed||reduceMotion} aria-label={enabled?'Pause factory footage':'Play factory footage'}>{enabled?<Pause size={15}/>:<Play size={15}/>} {enabled?'Pause footage':'Play footage'}</button>
+    </div>
    </div>
-   <div className="forge-scroll-hint"><ArrowDown size={14}/> {running?'PRODUCTION PREVIEW ACTIVE':'SCROLL TO ACTIVATE THE MACHINE'}</div>
   </div>
+  <div className="factory-film-caption"><span><ArrowDown size={14}/> VIDEO PLAYS AS YOU SCROLL INTO VIEW</span><a href="https://www.pexels.com/video/metal-business-work-production-4941355/" target="_blank" rel="noreferrer">Footage: Tima Miroshnichenko / Pexels</a></div>
  </section>
 }

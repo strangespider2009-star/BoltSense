@@ -20,20 +20,20 @@ function Scene({machineId,components,resetSignal}:{machineId:string,components:M
  const gl=useThree(s=>s.gl)
  const [focusTarget,setFocusTarget]=useState<Vector3>([0,.65,0])
  const focus=useCallback((target:Vector3)=>setFocusTarget(target),[])
- useEffect(()=>{gl.setClearColor('#0d0907',1)},[gl])
+ useEffect(()=>{gl.setClearColor('#161c1f',1)},[gl])
  useEffect(()=>setFocusTarget([0,.65,0]),[resetSignal,machineId])
  const Model=machineGeometry[machineId as keyof typeof machineGeometry]
  return <>
   <PerspectiveCamera makeDefault position={[8.8,6.1,10.4]} fov={42} near={.05} far={120}/>
   <ambientLight intensity={1.12}/>
-  <hemisphereLight args={['#ffe4c1','#2d1910',1.25]}/>
-  <directionalLight color="#fff0d8" position={[6,10,7]} intensity={2.6} castShadow shadow-mapSize={[1024,1024]} shadow-bias={-.0002}/>
-  <directionalLight position={[-5,4,-5]} color="#c06436" intensity={1.7}/>
-  <pointLight position={[2,4,5]} intensity={21} distance={13} color="#fc813d"/>
+  <hemisphereLight args={['#e7eced','#2a3034',1.15]}/>
+  <directionalLight color="#f4f5f3" position={[6,10,7]} intensity={2.6} castShadow shadow-mapSize={[1024,1024]} shadow-bias={-.0002}/>
+  <directionalLight position={[-5,4,-5]} color="#7f8e99" intensity={1.7}/>
+  <pointLight position={[2,4,5]} intensity={21} distance={13} color="#d3af83"/>
   <twinContext.Provider value={{components,focus}}>
     {machineId==='cnc-001'?<CncModel/>:Model?<Model/>:null}
   </twinContext.Provider>
-  <Grid position={[0,-1.72,0]} infiniteGrid cellSize={.58} sectionSize={2.9} cellColor="#5b3423" sectionColor="#a35b35" fadeDistance={24} fadeStrength={2.2}/>
+  <Grid position={[0,-1.72,0]} infiniteGrid cellSize={.58} sectionSize={2.9} cellColor="#3e484d" sectionColor="#677276" fadeDistance={24} fadeStrength={2.2}/>
   <ContactShadows position={[0,-1.7,0]} opacity={.55} scale={13} blur={2.9} far={4}/>
   <CameraControls resetSignal={resetSignal} focusTarget={focusTarget}/>
  </>

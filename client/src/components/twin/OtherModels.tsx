@@ -1,5 +1,5 @@
 import { Part, Box, Cylinder, Torus, Sphere, Pipe, CoolingFins, Bolt, LightStack } from './TwinParts'
-const white='#c6d6dc', blue='#277c96', steel='#8ca4ad', midnight='#243a4b', orange='#d6a34b', alloy='#b0bfc4'
+const white='#ccd1d3', blue='#58636a', steel='#879398', midnight='#343b40', orange='#b18a63', alloy='#b8c0c3'
 
 export function LatheModel(){
  return <group position={[0,-.65,0]}>

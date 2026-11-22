@@ -1,0 +1,17 @@
+import { readFileSync } from 'node:fs'
+import { strict as assert } from 'node:assert'
+const read=(p)=>readFileSync(new URL('../'+p,import.meta.url),'utf8')
+const hero=read('client/src/pages/Home.tsx')
+const cards=read('client/src/components/MachineCard.tsx')
+const film=read('client/src/components/ScrollForge.tsx')
+const media=read('client/src/data/industrialMedia.ts')
+const cnc=read('client/src/components/twin/CncModel.tsx')
+const style=read('client/src/style.css')
+assert(hero.includes('hero-sparks-photo')&&!hero.includes('furnace-flames'))
+assert(cards.includes('machine-photo'))
+assert(film.includes('IntersectionObserver')&&film.includes('<video')&&film.includes('prefers-reduced-motion')&&film.includes('onError'))
+assert(!cnc.includes('useFrame')&&!cnc.includes('MachiningMotion'))
+assert(!style.includes('.forge-embers')&&!style.includes('.furnace-flames'))
+assert(!media.includes('gettyimages')&&!media.includes('istockphoto'))
+for(const key of ['cnc','lathe','conveyor','press','robot','pump','compressor','motor'])assert(media.includes(key+':'),key+' media missing')
+console.log('Real industrial visuals checked: eight photo categories, real filmed machinery, no cartoon fire.')

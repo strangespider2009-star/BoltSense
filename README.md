@@ -15,6 +15,10 @@
 - Transparent risk rules with configurable sensor-specific thresholds; unit tests and API integration tests.
 - No trained predictive AI, no fabricated physical readings, no guaranteed failure dates.
 
+## Real factory photography and filmed machining
+
+The home page now displays licensed industrial photography and a real CNC machining video, automatically playing muted when the section enters view. Machine cards use real equipment photographs and no synthetic flames. The interactive digital twins remain reference geometry, not manufacturer CAD. All demo telemetry is still simulated. See [docs/real-factory-visuals.md](docs/real-factory-visuals.md) for sources and media fallback behavior.
+
 ## Requirements
 
 - Node.js 20+ and npm
