@@ -8,8 +8,11 @@ import type { Component, Health } from '../../types'
 type V3 = [number, number, number]
 export type ModelPartProps = { id?: string; position?: V3; rotation?: V3; children: ReactNode; labelOffset?: number }
 export const twinContext = createContext<{ components: Map<string, Component>; focus: (point: V3) => void }>({components: new Map(), focus: () => undefined})
-const healthColor: Record<Health,string> = { healthy: '#2be1c6', warning: '#ffb54c', critical: '#ff6676', unknown: '#889bac' }
+const healthColor: Record<Health,string> = { healthy: '#41c997', warning: '#ffbc57', critical: '#ff5263', unknown: '#a6a19a' }
 const materialBaseColors = new WeakMap<THREE.MeshStandardMaterial, THREE.Color>()
+const materialInitialState = new WeakMap<THREE.MeshStandardMaterial, {opacity:number;transparent:boolean;depthWrite:boolean}>()
+/** Translucent access covers expose the machine's inner working parts. */
+const accessCovers = new Set(['cnc-enclosure-01','lathe-enclosure-01','conv-safety-guard-01','pump-volute-01','comp-air-end-01','motor-stator-01'])
 
 /** Groups preserve independent, stable component IDs even if the assembly has many individual meshes. */
 export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:ModelPartProps){
@@ -22,6 +25,7 @@ export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:Mo
  const showSensors=useBoltStore(s=>s.sensorMarkers)
  const thermal=useBoltStore(s=>s.thermal)
  const risk=useBoltStore(s=>s.risk)
+ const xray=useBoltStore(s=>s.xray)
  const mode=useBoltStore(s=>s.mode)
  const readings=useBoltStore(s=>s.readings)
  const [hover,setHover]=useState(false)
@@ -42,18 +46,30 @@ export function Part({id, position=[0,0,0],rotation,children,labelOffset=.65}:Mo
    if (!(mat instanceof THREE.MeshStandardMaterial)) return
    let base=materialBaseColors.get(mat)
    if (!base){base=mat.color.clone();materialBaseColors.set(mat,base)}
+   let initial=materialInitialState.get(mat)
+   if(!initial){initial={opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite};materialInitialState.set(mat,initial)}
+   const ghost=xray && !!id && accessCovers.has(id)
+   mat.opacity=initial.opacity*(ghost?.16:1)
+   mat.transparent=initial.transparent||ghost
+   mat.depthWrite=initial.depthWrite&&!ghost
+   // Ghosted shell meshes should not intercept clicks intended for hidden parts.
+   child.raycast=ghost?(()=>undefined):THREE.Mesh.prototype.raycast
    mat.color.copy(base).lerp(overlay,(risk||thermal)? .48 : (selected||hover)? .14 : 0)
    mat.emissive.set((selected||hover)?overlay:'#000000')
    mat.emissiveIntensity=selected?.21:hover?.11:0
   })
- },[risk,thermal,overlayColor,selected,hover])
+ },[risk,thermal,overlayColor,selected,hover,xray,id])
  function click(e:ThreeEvent<MouseEvent>){if(!component)return;e.stopPropagation();select(component.id)}
  return <group ref={group} position={position} rotation={rotation} onPointerOver={e=>{if(!component)return;e.stopPropagation();setHover(true);document.body.style.cursor='pointer'}} onPointerOut={e=>{if(!component)return;e.stopPropagation();setHover(false);document.body.style.cursor=''}} onClick={click}>
   {children}
-  {component&&showSensors&&instrumented&&<mesh position={[0,labelOffset*.45,.2]}><sphereGeometry args={[.09,12,8]}/><meshBasicMaterial color="#2be1d1"/></mesh>}
+  {component&&showSensors&&instrumented&&<mesh position={[0,labelOffset*.45,.2]}><sphereGeometry args={[.09,12,8]}/><meshBasicMaterial color="#ff9a41"/></mesh>}
   {component&&(selected||hover)&&<pointLight position={[0,.22,0]} color={overlayColor} intensity={selected?4:1.6} distance={2.3} decay={2}/>}
   {component&&(selected||hover)&&<mesh rotation={[-Math.PI/2,0,0]} position={[0,-.1,0]}><ringGeometry args={[.48,.51,48]}/><meshBasicMaterial color={overlayColor} transparent opacity={selected?.9:.65} depthWrite={false} side={THREE.DoubleSide}/></mesh>}
-  {component && ((labels && !component.isCatalogOnly)||selected||hover) && <Html center position={[0,labelOffset,0]} distanceFactor={10} zIndexRange={[60,0]}><button type="button" className={`twin-label ${selected?'selected':''}`} onClick={e=>{e.stopPropagation();select(component.id)}}><span className="twin-label-dot" style={{background:overlayColor}}/>{component.name}{component.isCatalogOnly&&<small>PLANNED</small>}</button></Html>}
+  {component && (labels||selected||hover) && <Html center position={[0,labelOffset,0]} distanceFactor={10} zIndexRange={[80,10]}>
+   <button type="button" title={`${component.name} — ${component.location}`} aria-label={`Inspect ${component.name}`} className={`twin-label component-pin ${selected?'selected':''} ${component.isCatalogOnly?'planned':''}`} onClick={e=>{e.stopPropagation();select(component.id)}}>
+    <span className="twin-label-number">{Array.from(components.keys()).indexOf(component.id)+1}</span><span className="twin-label-name">{component.name}</span>{component.isCatalogOnly&&<small>PLANNED</small>}
+   </button>
+  </Html>}
  </group>
 }
 

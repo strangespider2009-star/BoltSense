@@ -20,20 +20,20 @@ function Scene({machineId,components,resetSignal}:{machineId:string,components:M
  const gl=useThree(s=>s.gl)
  const [focusTarget,setFocusTarget]=useState<Vector3>([0,.65,0])
  const focus=useCallback((target:Vector3)=>setFocusTarget(target),[])
- useEffect(()=>{gl.setClearColor('#0b1520',1)},[gl])
+ useEffect(()=>{gl.setClearColor('#0d0907',1)},[gl])
  useEffect(()=>setFocusTarget([0,.65,0]),[resetSignal,machineId])
  const Model=machineGeometry[machineId as keyof typeof machineGeometry]
  return <>
   <PerspectiveCamera makeDefault position={[8.8,6.1,10.4]} fov={42} near={.05} far={120}/>
-  <ambientLight intensity={1.35}/>
-  <hemisphereLight args={['#c9f3ff','#243449',1.4]}/>
-  <directionalLight position={[6,10,7]} intensity={2.6} castShadow shadow-mapSize={[1024,1024]} shadow-bias={-.0002}/>
-  <directionalLight position={[-5,4,-5]} color="#5b9cb8" intensity={1.7}/>
-  <pointLight position={[2,4,5]} intensity={21} distance={13} color="#45d1dc"/>
+  <ambientLight intensity={1.12}/>
+  <hemisphereLight args={['#ffe4c1','#2d1910',1.25]}/>
+  <directionalLight color="#fff0d8" position={[6,10,7]} intensity={2.6} castShadow shadow-mapSize={[1024,1024]} shadow-bias={-.0002}/>
+  <directionalLight position={[-5,4,-5]} color="#c06436" intensity={1.7}/>
+  <pointLight position={[2,4,5]} intensity={21} distance={13} color="#fc813d"/>
   <twinContext.Provider value={{components,focus}}>
     {machineId==='cnc-001'?<CncModel/>:Model?<Model/>:null}
   </twinContext.Provider>
-  <Grid position={[0,-1.72,0]} infiniteGrid cellSize={.58} sectionSize={2.9} cellColor="#294657" sectionColor="#457e8a" fadeDistance={24} fadeStrength={2.2}/>
+  <Grid position={[0,-1.72,0]} infiniteGrid cellSize={.58} sectionSize={2.9} cellColor="#5b3423" sectionColor="#a35b35" fadeDistance={24} fadeStrength={2.2}/>
   <ContactShadows position={[0,-1.7,0]} opacity={.55} scale={13} blur={2.9} far={4}/>
   <CameraControls resetSignal={resetSignal} focusTarget={focusTarget}/>
  </>
@@ -45,6 +45,6 @@ export function DigitalTwin({machineId,components,resetSignal}:{machineId:string
    <Suspense fallback={null}><Scene machineId={machineId} components={componentMap} resetSignal={resetSignal}/></Suspense>
   </Canvas>
   <div className="twin-watermark">DETAILED INDUSTRIAL REFERENCE MODEL <span>· PROCEDURAL / NOT ENGINEERING CAD</span></div>
-  <div className="twin-orientation">DRAG TO ORBIT · SCROLL TO ZOOM · SELECT ASSEMBLIES</div>
+  <div className="twin-orientation">DRAG TO ORBIT · SCROLL TO ZOOM · CLICK NUMBERED PINS</div>
  </div>
 }
