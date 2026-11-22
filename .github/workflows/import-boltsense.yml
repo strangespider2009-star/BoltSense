@@ -1,4 +1,4 @@
-name: Import BoltSense 120-commit project history
+name: Import BoltSense project history
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Import and merge verified project commit history
+      - name: Merge 120 project commits without modifying workflows
         shell: bash
         run: |
           set -euo pipefail
@@ -30,7 +30,7 @@ jobs:
           git bundle verify /tmp/boltsense-history.bundle
           git fetch /tmp/boltsense-history.bundle 'refs/heads/main:refs/remotes/bolt-history/main'
           git merge --allow-unrelated-histories --no-ff --no-commit refs/remotes/bolt-history/main
-          git rm -f .boltsense-import.bundle.b64 .github/workflows/import-boltsense.yml
+          git rm -f .boltsense-import.bundle.b64
           git add -A
           git commit -m 'Merge verified 120-commit BoltSense project history'
           git push origin HEAD:main
