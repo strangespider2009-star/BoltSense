@@ -8,7 +8,7 @@
 
 - React + TypeScript + Vite, Tailwind CSS, shadcn-style Button with Radix Slot, Framer Motion, Lucide, Zustand.
 - Three.js + React Three Fiber + Drei interactive CNC digital twin: orbit/zoom, click/hover part selection, labels, temperature/risk coloring, responsive inspection drawer, camera reset, fullscreen.
-- 8 industrial machine categories; CNC has 7 individually mapped demonstration components. Other machines use clearly labeled generic procedural models rather than pretending to have precision CAD.
+- 8 machine-specific high-detail industrial reference meshes, with separate CNC milling, CNC lathe, conveyor, hydraulic press, robot, pump, compressor and motor assemblies. 107 individually addressable component/sensor targets across the fleet, including planned targets clearly marked as uninstrumented.
 - Dashboard with sensor table, simulated Recharts telemetry trends, maintenance and alert views.
 - Express REST API + Zod validation, PostgreSQL/Prisma model/schema, MQTT ingestion with sensor/machine/component ID verification, Socket.IO events, optional JWT authentication for protected mutations.
 - Raspberry Pi Python publisher with **explicit mock mode** or configurable hardware adapter; configurable MQTT broker.
@@ -127,7 +127,7 @@ For privileged writes, configure `server/.env` with `ADMIN_EMAIL`, a bcrypt `ADM
 ## Files
 
 ```text
-client/               React UI, Three.js digital twin, charts, routing
+client/               React UI, 8 Three.js digital twins, searchable component monitoring catalog, charts, routing
 server/src/           Express routes, auth, MQTT ingest, validation, risk logic
 server/prisma/        PostgreSQL schema and seed registry
 raspberry-pi/         Configurable publisher, mock and hardware adapter contract
@@ -153,10 +153,18 @@ The archive is also initialized as a local Git repository with a first commit, s
 
 ## Known MVP boundaries
 
-- The CNC machine is interactive but procedural, with no included third-party GLB or licensed CAD. The generic machines are deliberately simplified.
+- All eight machines have distinct interactive procedural industrial reference geometry; these are not manufacturer-provided CAD or photogrammetry scans. Visual proportions are illustrative and no third-party GLB assets are bundled.
 - The browser's Demo mode operates independently of the backend. Demo acknowledgement is local state only.
 - Component focus uses hover and selectable meshes; automated camera close-ups and exploded view are future enhancements.
 - Current live trend charts, live database-backed UI lists, technician assignment UI, model-specific configuration editor, and report PDF export are not fully implemented. JSON demo export is available from the inspection panel.
 - Although the API supports live storage/telemetry, deploying physical sensors requires genuine sensor drivers, calibration, thresholds, and industrial networking precautions.
 
 License: no open-source license has been selected. Add one before inviting outside contributions or redistribution.
+
+## Detailed interactive machines and monitoring catalog
+
+Select **Component Catalog** in the sidebar to browse all **107** named targets, choose a specific machine, search components, and see proposed metrics and sensor types. Open a 3D digital twin to select modeled parts by clicking their mesh or by selecting the entry in the hierarchy. The hierarchy offers All, Demo Mapped and Planned filters; the inspection drawer distinguishes demo sensor mappings from proposed instrumentation. No reading, risk, maintenance estimate or hardware status is inferred for uninstrumented components.
+
+Each machine has a dedicated illustrative 3D model using metal-like materials, construction details and identifiable assemblies: spindle, tool changer, guides and coolant on the CNC; chuck, turret and ways on the lathe; rollers and belt drivetrain on conveyors; cylinder, ram and platen on presses; articulated joints and end effector on robots; volute, shaft and seal on pumps; air-end, motor, separator and receiver on compressors; and winding, housing, shaft, bearing and cooling components on motors. All shapes are generated locally in Three.js without external downloads.
+
+**Important:** These are manufacturer-agnostic reference models with substantial visual detail, not dimensionally calibrated engineering CAD or safety-approved digital twins. Hardware integration requires actual sensor installation, safe machine-specific mounting, calibration, verified units and appropriate industrial supervision. Do not use this prototype to control industrial machines or circumvent guarding and interlocks.
