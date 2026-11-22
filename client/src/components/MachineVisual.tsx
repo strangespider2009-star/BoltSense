@@ -1,0 +1,1 @@
+// BoltSense component scaffold
