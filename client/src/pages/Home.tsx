@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import type { PointerEvent as ReactPointerEvent } from 'react'
 import { ArrowRight, ArrowUpRight, Activity, CheckCircle2, ChevronRight, Cpu, Factory, Radio, ShieldCheck, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { machines, alerts } from '../data/demo'
@@ -10,7 +11,29 @@ import { MachineReveal } from '../components/MachineReveal'
 export function Home(){
  const health=Math.round(machines.reduce((s,m)=>s+m.healthScore,0)/machines.length)
  return <div className="page"><div className="page-topline"><span className="eyebrow"><span className="tiny-dot"/> INDUSTRIAL OPERATIONS CENTER</span><span className="muted micro">PHYSICAL MACHINERY · COMPONENT INTELLIGENCE · SIMULATED READINGS</span></div>
- <motion.section className="hero" initial={{opacity:0,y:15}} animate={{opacity:1,y:0}} transition={{duration:.5}}><div className="hero-copy"><span className="hero-kicker"><Radio size={14}/> BOLTSENSE / INDUSTRIAL MONITORING</span><h1>Monitor<span className="accent">.</span><br/>Predict<span className="accent">.</span><br/><span className="text-gradient">Prevent.</span></h1><p>Turn machinery into intelligence. A connected industrial digital twin platform to visualize condition, discover anomalies, and plan maintenance before costly downtime.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/machines">Explore Machines <ArrowRight size={17}/></Link></Button><Button variant="outline" asChild size="lg"><Link to="/dashboard">View Live Dashboard <ArrowUpRight size={17}/></Link></Button></div><div className="hero-trust"><span><CheckCircle2 size={15}/> Component-level insights</span><span><CheckCircle2 size={15}/> Raspberry Pi ready</span></div></div><MachineReveal/></motion.section>
+ <motion.section
+  className="hero hero--spotlight"
+  initial={{opacity:0,y:15}}
+  animate={{opacity:1,y:0}}
+  transition={{duration:.5}}
+  onPointerEnter={(event:ReactPointerEvent<HTMLElement>)=>{
+   if(event.pointerType !== 'mouse' && event.pointerType !== 'pen') return
+   const bounds=event.currentTarget.getBoundingClientRect()
+   event.currentTarget.style.setProperty('--hero-reveal-x',`${((event.clientX-bounds.left)/bounds.width)*100}%`)
+   event.currentTarget.style.setProperty('--hero-reveal-y',`${((event.clientY-bounds.top)/bounds.height)*100}%`)
+  }}
+  onPointerMove={(event:ReactPointerEvent<HTMLElement>)=>{
+   if(event.pointerType !== 'mouse' && event.pointerType !== 'pen') return
+   const bounds=event.currentTarget.getBoundingClientRect()
+   event.currentTarget.style.setProperty('--hero-reveal-x',`${Math.max(0,Math.min(100,(event.clientX-bounds.left)/bounds.width*100))}%`)
+   event.currentTarget.style.setProperty('--hero-reveal-y',`${Math.max(0,Math.min(100,(event.clientY-bounds.top)/bounds.height*100))}%`)
+  }}
+  onPointerLeave={event=>{
+   // Clear cursor coordinates; the image is fully hidden by CSS once the cursor leaves.
+   event.currentTarget.style.removeProperty('--hero-reveal-x')
+   event.currentTarget.style.removeProperty('--hero-reveal-y')
+  }}
+ ><MachineReveal/><div className="hero-copy"><span className="hero-kicker"><Radio size={14}/> BOLTSENSE / INDUSTRIAL MONITORING</span><h1>Monitor<span className="accent">.</span><br/>Predict<span className="accent">.</span><br/><span className="text-gradient">Prevent.</span></h1><p>Turn machinery into intelligence. A connected industrial digital twin platform to visualize condition, discover anomalies, and plan maintenance before costly downtime.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/machines">Explore Machines <ArrowRight size={17}/></Link></Button><Button variant="outline" asChild size="lg"><Link to="/dashboard">View Live Dashboard <ArrowUpRight size={17}/></Link></Button></div><div className="hero-trust"><span><CheckCircle2 size={15}/> Component-level insights</span><span><CheckCircle2 size={15}/> Raspberry Pi ready</span></div></div></motion.section>
  <ScrollForge/>
  <section className="kpi-grid"><div className="kpi-card"><div className="kpi-icon blue"><Factory size={19}/></div><span className="kpi-name">MONITORED MACHINES</span><div className="kpi-number">{machines.length}<small>total units</small></div><span className="kpi-foot"><span className="tiny-dot"/> Fleet connected in demo</span></div><div className="kpi-card"><div className="kpi-icon teal"><Cpu size={19}/></div><span className="kpi-name">CONNECTED SENSORS</span><div className="kpi-number">{machines.reduce((x,m)=>x+m.connected,0)}<small>active of {machines.reduce((x,m)=>x+m.total,0)}</small></div><span className="kpi-foot">Simulated sensor registry</span></div><div className="kpi-card"><div className="kpi-icon amber"><Zap size={19}/></div><span className="kpi-name">ACTIVE ALERTS</span><div className="kpi-number">{alerts.length}<small>require review</small></div><span className="kpi-foot warning-text">1 critical · 2 warnings</span></div><div className="kpi-card"><div className="kpi-icon purple"><ShieldCheck size={19}/></div><span className="kpi-name">AVG. FLEET HEALTH</span><div className="kpi-number">{health}<small>% score</small></div><span className="kpi-foot">Illustrative health indicator</span></div></section>
  <section className="section"><div className="section-heading"><div><span className="eyebrow">INDUSTRIAL ASSETS</span><h2>Explore your machine fleet</h2><p>Select a machine to open its 3D digital twin and inspect individual components.</p></div><Link to="/machines" className="text-link">VIEW ALL MACHINES <ChevronRight size={15}/></Link></div><div className="machine-grid">{machines.slice(0,4).map((m,i)=><MachineCard key={m.id} machine={m} index={i}/>)}</div></section>

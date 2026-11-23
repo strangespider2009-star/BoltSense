@@ -250,3 +250,99 @@ body{background:#090b0d;color:#f5f3ef}
  .shell:has(.hero-machine-reveal:focus-visible) .cursor-glow,
  .shell:has(.hero-machine-reveal:focus-visible) .cursor-glow-trail{opacity:0!important}
 }
+
+
+/* Full landing hero: photograph is visible ONLY while inspecting the hero. */
+.hero.hero--spotlight{
+ --hero-reveal-x:68%;
+ --hero-reveal-y:48%;
+ background:linear-gradient(115deg,#151a1b,#0a0e10 75%)!important;
+ isolation:isolate;
+ position:relative;
+ overflow:hidden;
+}
+.hero--spotlight .hero-full-reveal{
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ z-index:1;
+ pointer-events:none;
+ overflow:hidden;
+}
+.hero--spotlight .hero-full-reveal-image{
+ position:absolute;
+ inset:0;
+ height:100%;
+ width:100%;
+ object-fit:cover;
+ object-position:center 50%;
+ filter:contrast(1.13) saturate(.8) brightness(.87);
+ opacity:0;
+ transition:opacity .23s ease-out;
+ -webkit-mask-image:radial-gradient(circle 290px at var(--hero-reveal-x) var(--hero-reveal-y),#000 0%,#000 22%,#000c 50%,transparent 100%);
+ mask-image:radial-gradient(circle 290px at var(--hero-reveal-x) var(--hero-reveal-y),#000 0%,#000 22%,#000c 50%,transparent 100%);
+}
+@media(hover:hover) and (pointer:fine){
+ .hero--spotlight:hover .hero-full-reveal-image{opacity:1}
+}
+.hero--spotlight:focus-within .hero-full-reveal-image{opacity:1}
+.hero--spotlight .hero-copy{
+ position:relative;
+ z-index:3;
+ background:linear-gradient(90deg,rgba(15,19,20,.46),rgba(15,19,20,.1) 84%,transparent);
+}
+.hero--spotlight .hero-copy h1,
+.hero--spotlight .hero-copy p{text-shadow:0 2px 15px #04060699}
+.hero--spotlight .hero-full-reveal-vignette{
+ position:absolute;inset:0;
+ background:linear-gradient(180deg,#0d101155,transparent 28%,transparent 55%,#07090bc2),
+  linear-gradient(90deg,transparent 56%,#070a0a33);
+ pointer-events:none;
+}
+.hero--spotlight .hero-full-reveal-topline,
+.hero--spotlight .hero-full-reveal-bottom{
+ position:absolute;
+ z-index:2;
+ right:clamp(17px,2.2vw,33px);
+ color:#ddd7cc;
+ pointer-events:none;
+}
+.hero--spotlight .hero-full-reveal-topline{
+ top:26px;
+ display:flex;align-items:center;gap:9px;
+ font-size:10px;font-weight:800;letter-spacing:.12em;
+}
+.hero--spotlight .hero-full-reveal-topline>span:last-child{margin-left:22px;color:#a7aaa6}
+.hero--spotlight .hero-full-reveal-dot{width:7px;height:7px;border-radius:50%;background:#d4ac84}
+.hero--spotlight .hero-full-reveal-bottom{
+ bottom:26px;
+ display:flex;align-items:center;gap:13px;
+ max-width:min(44%,420px);
+}
+.hero--spotlight .hero-full-reveal-crosshair{
+ display:grid;place-items:center;
+ width:39px;height:39px;flex:0 0 auto;
+ border-radius:50%;border:1px solid #9c9f9770;
+ color:#ebd0b1;font-size:23px;font-weight:300;
+}
+.hero--spotlight .hero-full-reveal-bottom div{display:flex;flex-direction:column;gap:5px}
+.hero--spotlight .hero-full-reveal-bottom strong{font:700 17px 'Space Grotesk',system-ui,sans-serif;color:#f6f6f5}
+.hero--spotlight .hero-full-reveal-bottom small{color:#bcb5aa;font-size:9px;font-weight:800;letter-spacing:.09em;line-height:1.5}
+@supports selector(:has(*)){
+ .shell:has(.hero--spotlight:hover) .cursor-glow,
+ .shell:has(.hero--spotlight:hover) .cursor-glow-trail,
+ .shell:has(.hero--spotlight:focus-within) .cursor-glow,
+ .shell:has(.hero--spotlight:focus-within) .cursor-glow-trail{opacity:0!important}
+}
+@media(max-width:980px){
+ .hero--spotlight .hero-full-reveal-topline,
+ .hero--spotlight .hero-full-reveal-bottom{display:none}
+ .hero--spotlight .hero-copy{background:linear-gradient(90deg,#1318196e,#13181922)}
+}
+@media(hover:none),(pointer:coarse){
+ .hero--spotlight .hero-full-reveal-image{opacity:0!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero--spotlight .hero-full-reveal-image{transition:none}
+}
