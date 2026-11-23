@@ -241,3 +241,12 @@ body{background:#090b0d;color:#f5f3ef}
  .hero-machine-reveal .reveal-machine-window{opacity:.9;-webkit-mask-image:none;mask-image:none}
  .machine-card-motion{display:none}
 }
+
+/* In the inspection image, use the local machine-reveal spotlight instead of
+   layering a full-page cursor halo across the highlighted machinery. */
+@supports selector(:has(*)){
+ .shell:has(.hero-machine-reveal:hover) .cursor-glow,
+ .shell:has(.hero-machine-reveal:hover) .cursor-glow-trail,
+ .shell:has(.hero-machine-reveal:focus-visible) .cursor-glow,
+ .shell:has(.hero-machine-reveal:focus-visible) .cursor-glow-trail{opacity:0!important}
+}

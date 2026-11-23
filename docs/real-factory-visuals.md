@@ -32,3 +32,32 @@ The page displays a **real footage / not live sensor data** label. All dashboard
 The hero images and video are loaded from the third-party Pexels CDN. Production sites should download authorized versions for self-hosting and caching when possible, and budget for network bandwidth. If the external CDN is blocked or down, video falls back to the Pexels poster. Replace constants in `client/src/data/industrialMedia.ts` to serve self-hosted media (e.g. `/media/cnc-machining.mp4`) without changing the component logic.
 
 The clickable Three.js digital twins remain **procedural reference meshes**, not exact physical-model scans; actual GLB/CAD assets can be installed later after checking license and component ID mappings.
+
+## Homepage detail spotlight and machine-fleet footage (2026-11-23)
+
+The landing page contains a photo-based **inspection spotlight**: outside the
+soft circular mask, the industrial CNC photo remains dim; moving a mouse or pen
+changes the revealed portion. This is one real photograph, not generative/CAD
+geometry, and does not imply thermal sensing or a real sensor scan.
+Keyboard focus reveals a centered area. On touch screens or reduced-motion
+devices, the complete still photo remains visible for accessibility.
+
+Machine Fleet cards begin muted stock-footage playback when hovered or focused,
+pause on exit, and fall back to their machine photograph if playback fails.
+The files are **representative clips, not actual BoltSense monitoring feeds**.
+Playback is deferred until interaction to minimize initial loading.
+
+Pexels source footage, also recorded in `client/src/data/industrialMedia.ts`:
+- CNC milling: https://www.pexels.com/video/metal-business-work-production-4941355/
+- Lathe: https://www.pexels.com/video/metal-working-machinery-5846709/
+- Conveyor: https://www.pexels.com/video/factory-conveyor-belt-4473250/
+- Press / metal forming: https://www.pexels.com/video/industrial-metal-bending-process-close-up-31751361/
+- Robot arm: https://www.pexels.com/video/automated-car-factory-6450803/
+- Pump class: https://www.pexels.com/video/industrial-machinery-and-piping-inside-factory-30243446/ (related process/piping, *not the exact pump*)
+- Compressor class: https://www.pexels.com/video/a-man-using-an-air-compressor-8469677/ (workshop tool use, *not the exact compressor*)
+- Electric motor: https://www.pexels.com/video/electric-motor-assembly-in-workshop-setting-36272555/ (motor assembly, *not motor operation*)
+
+High-resolution video from a third-party CDN can consume considerable data;
+for a production rollout, acquire smaller licensed files, host them on a CDN,
+and verify each clip's runtime playback. The dashboard remains a demo until
+validated physical hardware is connected.
