@@ -279,14 +279,15 @@ body{background:#090b0d;color:#f5f3ef}
  object-position:center 50%;
  filter:contrast(1.13) saturate(.8) brightness(.87);
  opacity:0;
- transition:opacity .23s ease-out;
+ transition:none; /* Exit restores the black background immediately. */
  -webkit-mask-image:radial-gradient(circle 290px at var(--hero-reveal-x) var(--hero-reveal-y),#000 0%,#000 22%,#000c 50%,transparent 100%);
  mask-image:radial-gradient(circle 290px at var(--hero-reveal-x) var(--hero-reveal-y),#000 0%,#000 22%,#000c 50%,transparent 100%);
 }
 @media(hover:hover) and (pointer:fine){
- .hero--spotlight:hover .hero-full-reveal-image{opacity:1}
+ .hero--spotlight:hover .hero-full-reveal-image{opacity:1;transition:opacity .19s ease-out}
 }
-.hero--spotlight:focus-within .hero-full-reveal-image{opacity:1}
+/* Keep keyboard focus accessible, without retaining the reveal after a mouse click. */
+.hero--spotlight:has(:focus-visible) .hero-full-reveal-image{opacity:1;transition:opacity .19s ease-out}
 .hero--spotlight .hero-copy{
  position:relative;
  z-index:3;
@@ -332,8 +333,8 @@ body{background:#090b0d;color:#f5f3ef}
 @supports selector(:has(*)){
  .shell:has(.hero--spotlight:hover) .cursor-glow,
  .shell:has(.hero--spotlight:hover) .cursor-glow-trail,
- .shell:has(.hero--spotlight:focus-within) .cursor-glow,
- .shell:has(.hero--spotlight:focus-within) .cursor-glow-trail{opacity:0!important}
+ .shell:has(.hero--spotlight:has(:focus-visible)) .cursor-glow,
+ .shell:has(.hero--spotlight:has(:focus-visible)) .cursor-glow-trail{opacity:0!important}
 }
 @media(max-width:980px){
  .hero--spotlight .hero-full-reveal-topline,
