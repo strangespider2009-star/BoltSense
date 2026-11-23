@@ -61,5 +61,9 @@ export const machineFootage: Partial<Record<keyof typeof industrialMedia, Machin
   sourceUrl: 'https://www.pexels.com/video/electric-motor-assembly-in-workshop-setting-36272555/',
   context: 'Electric motor assembly workshop, not a running motor',
  },
- // No verified operating-compressor clip: keep a truthful reference photograph.
+ compressor: {
+  src: 'https://videos.pexels.com/video-files/8469677/8469677-uhd_2160_3840_25fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/a-man-using-an-air-compressor-8469677/',
+  context: 'Air compressor being used in a workshop; not a production-line compressor',
+ },
 }
