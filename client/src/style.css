@@ -196,3 +196,48 @@ body{background:#090b0d;color:#f5f3ef}
 .hero-machine-preview video:focus-visible{outline:2px solid #dfad79;outline-offset:2px}
 @media (prefers-reduced-motion:reduce),(pointer:coarse){.cursor-glow.cursor-glow-core,.cursor-glow-trail{display:none}}
 @media (prefers-reduced-motion:reduce){.hero-machine-preview video{display:none}.factory-film-stage .factory-film-background{transition:none}}
+
+
+/* BoltSense inspection reveal — industrial photography, not a rendered machine. */
+.hero-machine-reveal{
+ --reveal-x:51%;--reveal-y:49%;position:relative;display:block;overflow:hidden;
+ min-height:395px;cursor:crosshair;isolation:isolate;outline-offset:-5px;
+ background:radial-gradient(ellipse at 45% 50%,#2a302f 0%,#111718 65%,#090d0f 100%);
+}
+.hero-machine-reveal .reveal-machine-shadow,
+.hero-machine-reveal .reveal-machine-window,
+.hero-machine-reveal .reveal-machine-window img,
+.hero-machine-reveal .reveal-industrial-grid{position:absolute;inset:0;width:100%;height:100%}
+.reveal-machine-shadow{object-fit:cover;object-position:center;filter:grayscale(1) brightness(.15) contrast(1.5);opacity:.78;pointer-events:none}
+.reveal-machine-window{
+ pointer-events:none;opacity:.67;transition:opacity .4s ease;
+ -webkit-mask-image:radial-gradient(ellipse 195px 205px at var(--reveal-x) var(--reveal-y),#000 0%,#000 24%,#000b 53%,transparent 100%);
+ mask-image:radial-gradient(ellipse 195px 205px at var(--reveal-x) var(--reveal-y),#000 0%,#000 24%,#000b 53%,transparent 100%)
+}
+.reveal-machine-window img{object-fit:cover;object-position:center;filter:brightness(.95) contrast(1.08) saturate(.8)}
+.hero-machine-reveal.is-inspecting .reveal-machine-window{opacity:1}
+.reveal-industrial-grid{pointer-events:none;opacity:.18;background:linear-gradient(90deg,#c3bdb11a 1px,transparent 1px),linear-gradient(#c3bdb11a 1px,transparent 1px);background-size:47px 47px}
+.hero-machine-reveal:after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(180deg,rgba(7,10,11,.54),transparent 25%,transparent 56%,rgba(7,10,11,.86)),linear-gradient(90deg,#0a101155,transparent 36%,#0b11112a)}
+.reveal-topline,.reveal-footer{position:absolute;left:24px;right:24px;z-index:3;display:flex;align-items:center;color:#d8d3c9}
+.reveal-topline{top:22px;gap:9px;font-size:9px;letter-spacing:.14em;font-weight:800}
+.reveal-topline-right{margin-left:auto;color:#a7aaa6}
+.reveal-live-dot{width:7px;height:7px;border-radius:50%;background:#d4ac84;box-shadow:0 0 12px #d6a87666}
+.reveal-footer{bottom:23px;gap:12px}
+.reveal-crosshair{display:grid;place-items:center;width:38px;height:38px;border:1px solid #9c9f9770;color:#ebd0b1;border-radius:50%;font-size:23px;font-weight:300}
+.reveal-footer div{display:grid;gap:4px}
+.reveal-footer strong{font-size:17px;font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:-.02em;color:#fff}
+.reveal-footer div>span{font-size:9px;letter-spacing:.12em;font-weight:800;color:#bcb5aa}
+.hero-machine-reveal:focus-visible{outline:2px solid #d8af87;outline-offset:-4px}
+.machine-card-film .machine-card-visual{isolation:isolate}
+.machine-card-motion{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;pointer-events:none;transition:opacity .42s ease;filter:contrast(1.08) saturate(.8)}
+.machine-card-playing .machine-card-motion{opacity:1}
+.machine-card-film .machine-photo-shade{z-index:2;pointer-events:none}
+.machine-card-film .machine-photo-tag,.machine-card-film .machine-card-arrow{z-index:3}
+.machine-film-indicator{position:absolute;left:13px;bottom:12px;display:inline-flex;align-items:center;gap:6px;z-index:4;background:#0c1311e9;border:1px solid #b8a58c88;border-radius:6px;padding:7px 9px;color:#f1dcc1;font-size:9px;font-weight:800;letter-spacing:.09em;pointer-events:none}
+.machine-card-playing{border-color:#b8a08c!important;box-shadow:0 12px 40px #0008,0 0 0 1px #d4b48e36}
+@media(max-width:980px){.hero-machine-reveal{min-height:360px}}
+@media(max-width:600px){.hero-machine-reveal{min-height:300px}.reveal-topline,.reveal-footer{left:16px;right:16px}.reveal-topline-right{display:none}.reveal-footer strong{font-size:15px}}
+@media(pointer:coarse),(hover:none),(prefers-reduced-motion:reduce){
+ .hero-machine-reveal .reveal-machine-window{opacity:.9;-webkit-mask-image:none;mask-image:none}
+ .machine-card-motion{display:none}
+}

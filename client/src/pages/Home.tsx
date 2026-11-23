@@ -6,28 +6,11 @@ import { MachineCard } from '../components/MachineCard'
 import { TrendChart } from '../components/Charts'
 import { Button } from '../components/ui/button'
 import { ScrollForge } from '../components/ScrollForge'
-import { factorySparksImage, factoryCncVideo, industrialMedia } from '../data/industrialMedia'
+import { MachineReveal } from '../components/MachineReveal'
 export function Home(){
  const health=Math.round(machines.reduce((s,m)=>s+m.healthScore,0)/machines.length)
- return <div className="page"><div className="page-topline"><span className="eyebrow"><span className="tiny-dot"/> INDUSTRIAL OPERATIONS CENTER</span><span className="muted micro">REAL FACTORY VISUALS · INDUSTRIAL CONDITION INTELLIGENCE · SIMULATED READINGS</span></div>
- <motion.section className="hero" initial={{opacity:0,y:15}} animate={{opacity:1,y:0}} transition={{duration:.5}}><div className="hero-copy"><span className="hero-kicker"><Radio size={14}/> BOLTSENSE / INDUSTRIAL MONITORING</span><h1>Monitor<span className="accent">.</span><br/>Predict<span className="accent">.</span><br/><span className="text-gradient">Prevent.</span></h1><p>Turn machinery into intelligence. A connected industrial digital twin platform to visualize condition, discover anomalies, and plan maintenance before costly downtime.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/machines">Explore Machines <ArrowRight size={17}/></Link></Button><Button variant="outline" asChild size="lg"><Link to="/dashboard">View Live Dashboard <ArrowUpRight size={17}/></Link></Button></div><div className="hero-trust"><span><CheckCircle2 size={15}/> Component-level insights</span><span><CheckCircle2 size={15}/> Raspberry Pi ready</span></div></div><div className="hero-art hero-photo-art">
-  <img className="hero-sparks-photo" src={factorySparksImage} alt="Real metalworking in a factory, with bright sparks from a metal grinder" fetchPriority="high" />
-  <div className="hero-photo-vignette"/>
-  <div className="hero-machine-inset hero-machine-preview">
-    <img src={industrialMedia.cnc} alt="Photograph of precision CNC machining equipment"/>
-    <video src={factoryCncVideo} poster={industrialMedia.cnc} muted loop playsInline preload="none"
-      tabIndex={0} aria-label="Hover, focus or tap to play real CNC machining footage"
-      onPointerEnter={event=>{if(event.pointerType==='mouse'||event.pointerType==='pen')void event.currentTarget.play().catch(()=>{})}}
-      onPointerLeave={event=>event.currentTarget.pause()}
-      onFocus={event=>{void event.currentTarget.play().catch(()=>{})}}
-      onBlur={event=>event.currentTarget.pause()}
-      onClick={event=>{if(event.currentTarget.paused)void event.currentTarget.play().catch(()=>{});else event.currentTarget.pause()}}
-      onKeyDown={event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();if(event.currentTarget.paused)void event.currentTarget.play().catch(()=>{});else event.currentTarget.pause()}}}
-    />
-    <span>01 / PRECISION MACHINING · HOVER TO RUN</span>
-  </div>
-  <div className="hero-photo-caption"><span className="hero-photo-dot"/> REAL INDUSTRIAL PHOTOGRAPHY <small>Images: Pexels</small></div>
- </div></motion.section>
+ return <div className="page"><div className="page-topline"><span className="eyebrow"><span className="tiny-dot"/> INDUSTRIAL OPERATIONS CENTER</span><span className="muted micro">PHYSICAL MACHINERY · COMPONENT INTELLIGENCE · SIMULATED READINGS</span></div>
+ <motion.section className="hero" initial={{opacity:0,y:15}} animate={{opacity:1,y:0}} transition={{duration:.5}}><div className="hero-copy"><span className="hero-kicker"><Radio size={14}/> BOLTSENSE / INDUSTRIAL MONITORING</span><h1>Monitor<span className="accent">.</span><br/>Predict<span className="accent">.</span><br/><span className="text-gradient">Prevent.</span></h1><p>Turn machinery into intelligence. A connected industrial digital twin platform to visualize condition, discover anomalies, and plan maintenance before costly downtime.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/machines">Explore Machines <ArrowRight size={17}/></Link></Button><Button variant="outline" asChild size="lg"><Link to="/dashboard">View Live Dashboard <ArrowUpRight size={17}/></Link></Button></div><div className="hero-trust"><span><CheckCircle2 size={15}/> Component-level insights</span><span><CheckCircle2 size={15}/> Raspberry Pi ready</span></div></div><MachineReveal/></motion.section>
  <ScrollForge/>
  <section className="kpi-grid"><div className="kpi-card"><div className="kpi-icon blue"><Factory size={19}/></div><span className="kpi-name">MONITORED MACHINES</span><div className="kpi-number">{machines.length}<small>total units</small></div><span className="kpi-foot"><span className="tiny-dot"/> Fleet connected in demo</span></div><div className="kpi-card"><div className="kpi-icon teal"><Cpu size={19}/></div><span className="kpi-name">CONNECTED SENSORS</span><div className="kpi-number">{machines.reduce((x,m)=>x+m.connected,0)}<small>active of {machines.reduce((x,m)=>x+m.total,0)}</small></div><span className="kpi-foot">Simulated sensor registry</span></div><div className="kpi-card"><div className="kpi-icon amber"><Zap size={19}/></div><span className="kpi-name">ACTIVE ALERTS</span><div className="kpi-number">{alerts.length}<small>require review</small></div><span className="kpi-foot warning-text">1 critical · 2 warnings</span></div><div className="kpi-card"><div className="kpi-icon purple"><ShieldCheck size={19}/></div><span className="kpi-name">AVG. FLEET HEALTH</span><div className="kpi-number">{health}<small>% score</small></div><span className="kpi-foot">Illustrative health indicator</span></div></section>
  <section className="section"><div className="section-heading"><div><span className="eyebrow">INDUSTRIAL ASSETS</span><h2>Explore your machine fleet</h2><p>Select a machine to open its 3D digital twin and inspect individual components.</p></div><Link to="/machines" className="text-link">VIEW ALL MACHINES <ChevronRight size={15}/></Link></div><div className="machine-grid">{machines.slice(0,4).map((m,i)=><MachineCard key={m.id} machine={m} index={i}/>)}</div></section>

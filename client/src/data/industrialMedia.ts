@@ -19,3 +19,47 @@ export const factorySparksImage = 'https://images.pexels.com/photos/36003964/pex
 export const factoryCncPoster = 'https://images.pexels.com/videos/4941355/pexels-photo-4941355.jpeg?auto=compress&cs=tinysrgb&w=1600'
 /** Video by Tima Miroshnichenko, on Pexels: https://www.pexels.com/video/4941355/ */
 export const factoryCncVideo = 'https://videos.pexels.com/video-files/4941355/4941355-hd_1920_1080_25fps.mp4'
+
+// Real, documented stock footage previews. Clips illustrate machine classes or
+// associated industrial processes; they do NOT show the monitored demo asset.
+// URLs are Pexels originals; browser falls back to the corresponding machine photo
+// if playback is unavailable. No footage is loaded until card hover/focus.
+export type MachineFootage = { src: string; sourceUrl: string; context: string }
+export const machineFootage: Partial<Record<keyof typeof industrialMedia, MachineFootage>> = {
+ cnc: {
+  src: factoryCncVideo,
+  sourceUrl: 'https://www.pexels.com/video/metal-business-work-production-4941355/',
+  context: 'CNC metalworking process',
+ },
+ lathe: {
+  src: 'https://videos.pexels.com/video-files/5846709/5846709-hd_1920_1080_25fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/metal-working-machinery-5846709/',
+  context: 'Working metal lathe',
+ },
+ conveyor: {
+  src: 'https://videos.pexels.com/video-files/4473250/4473250-hd_1920_1080_30fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/factory-conveyor-belt-4473250/',
+  context: 'Moving conveyor belt',
+ },
+ press: {
+  src: 'https://videos.pexels.com/video-files/31751361/13528154_3840_2160_25fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/industrial-metal-bending-process-close-up-31751361/',
+  context: 'Industrial metal forming machine',
+ },
+ robot: {
+  src: 'https://videos.pexels.com/video-files/6450803/6450803-hd_1920_1080_25fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/automated-car-factory-6450803/',
+  context: 'Automotive manufacturing robotic arms',
+ },
+ pump: {
+  src: 'https://videos.pexels.com/video-files/30243446/12966146_4096_2160_25fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/industrial-machinery-and-piping-inside-factory-30243446/',
+  context: 'Industrial process plant and piping, not a specific pump',
+ },
+ motor: {
+  src: 'https://videos.pexels.com/video-files/36272555/15382014_1920_1080_11fps.mp4',
+  sourceUrl: 'https://www.pexels.com/video/electric-motor-assembly-in-workshop-setting-36272555/',
+  context: 'Electric motor assembly workshop, not a running motor',
+ },
+ // No verified operating-compressor clip: keep a truthful reference photograph.
+}
